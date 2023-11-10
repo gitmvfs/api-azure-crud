@@ -1,9 +1,0 @@
-{
-
-  "scripts": {
-    "commit": "cz"
-  },
-  "dependencies": {
-    "commitizen": "^4.3.0"
-  }
-}
