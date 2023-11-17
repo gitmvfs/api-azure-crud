@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const controllerL = require('./controllers/controllerLogin (1)')
 
 const script = require("./models/ademiro/adminInsert")
 // Colocando variaveis de ambiente
@@ -22,16 +23,23 @@ const routes = require('./routes/router');
 app.use('/api', routes)
 // app.use("/produto", produto)
 
-app.post("/logar" , (req,res,next) =>{
+app.post("/logar", (req,res,next) =>{
     const login = req.body.login
     const senha = req.body.password
 
-    console.log("Login e senha: " + login + " " + senha)
+    const tokenGer = gerarToken(login) 
+
+    console.log("Login e senha: " + login + " " + senha + " " +  tokenGer)
+
+    res.json({"token" : tokenGer}).status(200)
 
 })
+
+app.use('/logar', controllerL.post)
 // ouvindo uma porta
 
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { gerarToken } = require('./controllers/jwt');
  
 mongoose.connect("mongodb://gllmm:GvjzNgjDXFT29o0S7bmq6q9ww6JAAdltwa0aaMhM98Vamxx2JrI3oP3JBtUbyvRWgNlEcfDDVaZgACDbwN9H9w==@gllmm.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@gllmm@")
 .then(() =>{
