@@ -1,7 +1,10 @@
 const router = require('express').Router();
 
-const ServicesRouter = require('./service');
+const categoriaAtivaRouter = require('./categoriaAtiva');
+const categoriaOcultaRouter = require('./categoriaOculta');
 
-router.use('/', ServicesRouter);
+
+router.use('/', categoriaAtivaRouter);
+router.use('/', categoriaOcultaRouter);
 
 module.exports = router;

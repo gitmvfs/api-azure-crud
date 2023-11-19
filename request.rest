@@ -1,0 +1,14 @@
+POST http://localhost:3000/api/categoriaAtiva
+Content-Type: application/json
+
+{
+    "index":1,
+    "nome":"teste",
+    "descricao":"teste",
+    "inicio":"2023-11-12",
+    "fim":"2023-11-13",
+    "img":"https://www.google.com/url?sa=i&url=https%3A%2F%2Fbr.freepik.com%2Ffotos%2Fpaisagem&psig=AOvVaw1QaVdoR9tj3-l9v95YAeUn&ust=1700515788632000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIDihY6B0YIDFQAAAAAdAAAAABAE"
+}
+
+###
+GET http://localhost:3000/api/categorias

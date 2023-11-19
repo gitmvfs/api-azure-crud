@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const categoriaAtiva = mongoose.model('categoria ativa', {
+const {Schema} = mongoose;
+
+const categoriaSchema = new Schema({
     index:{
         type: Number,
         required: true
@@ -30,6 +32,9 @@ const categoriaAtiva = mongoose.model('categoria ativa', {
         type:String,
         required:true
     }
-})
+});
 
-module.exports = categoriaAtiva
+const categoriaAtiva = mongoose.model("categoriaAtiva", categoriaSchema)
+module.exports = {
+    categoriaAtiva, categoriaSchema,
+}
