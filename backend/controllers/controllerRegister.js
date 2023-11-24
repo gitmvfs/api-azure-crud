@@ -1,11 +1,10 @@
-const userInsert = require('../model/user/insertUser')
+const userInsert = require('../models/user/insertUser')
 
 exports.post = async (req,res) => {
     //Insere os dados no banco
     try {
         // Insere os dados no banco
         const cadastrar = await userInsert.saveUser({
-            telefone: req.body.telefone,
             email: req.body.email,
             senha: req.body.senha
         });
