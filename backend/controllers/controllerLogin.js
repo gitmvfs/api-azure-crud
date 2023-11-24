@@ -1,20 +1,19 @@
-const Token = require('./jwt');
-const User = require('../models/ademiro/AdminModel');
+const Token = require('../model/token/insertToken');
+const User = require('../model/user/userModel');
 
 
-exports.post = (req, res, id, login) => {
+exports.post = (req, res) => {
 
     try {
         // 
         const SalvarDados = ({
-            login: req.body.login,
-            senha: req.body.password
+            email: req.body.email,
+            senha: req.body.senha
         });
-        
-        if (SalvarDados.login != undefined && SalvarDados.senha != undefined) {
-            User.find({ login: SalvarDados.login })
+        if (SalvarDados.email != undefined && SalvarDados.senha != undefined) {
+            User.find({ email: SalvarDados.email })
                 .then((resultado) => {
-                   
+
                     let resultado_tratado = resultado
                     resultado_tratado = resultado_tratado[0]
                 
@@ -27,13 +26,9 @@ exports.post = (req, res, id, login) => {
                     }
                       
                     else if (resultado_tratado.senha === SalvarDados.senha) {
-                        const tokenGerado = Token.gerarToken(id, login);
-                        
-                        if(tokenGerado) {
-                            res.status(200).json(tokenGerado)
-                        } else{
-                            res.status(501).json('Token não gerado')
-                        }
+                        const tokenSocorro =  Token.registerToken(resultado_tratado._id, resultado_tratado.email)
+                        res.status(200).json(tokenSocorro)
+
                     }
                 }) 
 

@@ -1,24 +1,26 @@
+const mongoose = require("mongoose")
 const Produto = require('./produtosAtivosModelo')
 
-function inserirProduto(pk_idProduto, nome, preco, genero, descricao, tamanho, cor, tipo, linkFoto1, linkFoto2, linkFoto3, categoria){
+mongoose.Promise = global.Promise;
+
+const inserirProduto = () => {
 
     const novoProduto = new Produto({
-        pk_idProduto: pk_idProduto,
-        nome: nome,
-        preco: preco,
-        genero: genero,
-        descricao: descricao,
-        tamanho: tamanho,
-        cor: cor,
-        tipo: tipo,
-        linkFoto1:linkFoto1,
-        linkFoto2:linkFoto2,
-        linkFoto3:linkFoto3,
-        categoria: categoria
+        pk_idProduto: 1,
+        nome: "vestidinho",
+        preco: 1200,
+        genero: "masculino",
+        descricao: "não compre se não for usar",
+        tamanho: "PP",
+        cor: "verde",
+        tipo: "Vestido",
+        linkFoto1:"https://veterinario.pt/wp-content/uploads/2015/09/cat-pet-animal-domestic-gato800.jpg",
+        linkFoto2:"",
+        linkFoto3:"",
+        categoria: 1
     })
 
     novoProduto.save()
-
 }
 
 module.exports = inserirProduto
