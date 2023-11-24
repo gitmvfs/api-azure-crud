@@ -4,6 +4,7 @@ const app = express();
 const controllerLoginAdm = require('./controllers/controllerLoginAdm')
 const controllerRegister = require('./controllers/controllerRegister')
 const controllerLoginUser = require('./controllers/controllerLoginUser')
+const produtoAtivoInserts = require('./models/produtos_ativos/produtosAtivosInserts')
 
 const script = require("./models/ademiro/adminInsert")
 // Colocando variaveis de ambiente
@@ -37,10 +38,11 @@ app.use('/loginUser', controllerLoginUser.post)
 const mongoose = require("mongoose");
 const { gerarToken } = require('./controllers/jwt');
  
-mongoose.connect("mongodb://gllmm:GvjzNgjDXFT29o0S7bmq6q9ww6JAAdltwa0aaMhM98Vamxx2JrI3oP3JBtUbyvRWgNlEcfDDVaZgACDbwN9H9w==@gllmm.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@gllmm@")
+mongoose.connect("mongodb+srv://apiEcommerce:senai115@ecommerce.oxpuhqh.mongodb.net/?retryWrites=true&w=majority", {dbName: 'e-fodase'})
 .then(() =>{
 
     script()
+    produtoAtivoInserts()
     console.log("Conectado ao banco com sucesso.")
     app.listen(  3000, "0.0.0.0", () =>{
         console.log("Servidor aberto na porta: " + "3000")
