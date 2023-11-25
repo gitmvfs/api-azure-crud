@@ -1,23 +1,23 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+mongoose.Promise = global.Promise;
 
+const auto_increment = async (modelo) => {
+  try {
 
-// Faz uma pesquisa no modelo e cria uma promise com a index, caso consiga fazer a pesquisa devolve o tamanho da lista + 1
+    const result = await modelo.find().lean();
+    const index = result.length;
+    console.log(result)
+    console.log(index)
 
-const auto_increment = (modelo) => {
-  return new Promise((resolve, reject) => {
-    
-    modelo.find().lean()
-      .then((result) => {
-        const index = result.length ;
-        resolve(index);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        reject(error);
-      });
-  });
+    return index;
+  
 
+  } catch (error) {
+
+    console.error("Error:", error);
+    throw error;
+  
+}
 };
 
-
-module.exports = auto_increment
+module.exports = auto_increment;
