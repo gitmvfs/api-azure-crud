@@ -15,20 +15,15 @@ app.use(express.json())
 dotenv.config()
 
 
-
 // Configuração do servidor
 const server_port = process.env.SERVER_PORT || 3000;
 const banco_string = process.env.BANCO_STRING; 
 const blob_string = process.env.BLOB_STRING;
 
 
-//middleware
-
-
 // rotas 
 const routes = require('./routes/router');
 app.use('/api', routes)
-
 
 
 // conectando com o banco
