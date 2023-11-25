@@ -1,6 +1,8 @@
+const router = require('express').Router();
+
 const {categoriaOculta} = require('../models/categoriaOculta/schema');
 
-const catOcultaController = {
+const categoriaOcultaRota = {
 
     // rota post
     create: async(req, res) => {
@@ -79,4 +81,17 @@ const catOcultaController = {
     }
 }
 
-module.exports = catOcultaController;
+
+// rota POST
+router.route('/categoriaOculta').post((req, res) => categoriaOcultaRota.create(req, res));
+
+// rota GET ALL
+router.route('/categoriaOculta').get((req, res) => categoriaOcultaRota.getAll(req, res));
+
+// rota GET
+router.route('/categoriaOculta/:id').get((req, res) => categoriaOcultaRota.get(req, res));
+
+// rota UPDATE
+router.route('/categoriaOculta/:id').put((req, res) => categoriaOcultaRota.update(req, res));
+
+module.exports = router;

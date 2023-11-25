@@ -1,2 +1,0 @@
-AZURE_BLOB_STRING="DefaultEndpointsProtocol=https;AccountName=gllmm;AccountKey=nxK+oZN4lM0hu+4qHex8/6yOaOAeArO1MJYClEDbQJP1q5UM0oBhWjnAaQ0LfZv/Y04IFSpTbKZl+AStm0EDNQ==;EndpointSuffix=core.windows.net"
-AZURE_BANCO_STRING="mongodb://gllmm:GvjzNgjDXFT29o0S7bmq6q9ww6JAAdltwa0aaMhM98Vamxx2JrI3oP3JBtUbyvRWgNlEcfDDVaZgACDbwN9H9w==@gllmm.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@gllmm@"

@@ -1,7 +1,9 @@
+const router = require('express').Router();
+
 // CRIAR AS ROTAS DE GET POST ETC
 const { categoriaAtiva: categoriaModel } = require('../models/categoriaAtiva/schema')
 
-const categoriaController = {
+const categoriaAtivaRota = {
 
     // rota POST
     create: async (req, res) => {
@@ -95,4 +97,22 @@ const categoriaController = {
 
 }
 
-module.exports = categoriaController;
+
+//rota do metodo POST
+router.route('/categoriaAtiva').post((req, res) => categoriaAtivaRota.create(req, res));
+
+//rota GET ALL
+router.route('/categoria').get((req, res) => categoriaAtivaRota.getAll(req, res));
+
+// rota GET
+router.route('/categoria/:id').get((req, res) => categoriaAtivaRota.get(req, res))
+
+// rota DELETE
+router
+  .route("/categoria/:id")
+  .delete((req, res) => categoriaAtivaRota.delete(req, res));
+
+// rota UPDATE
+router.route('/categoria/:id').put((req, res) => categoriaAtivaRota.update(req, res));
+
+module.exports = router;
