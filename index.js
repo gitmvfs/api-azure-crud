@@ -1,7 +1,9 @@
+//Import das bibliotecas
 const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose")
+
 
 //permite que a API receba dados cross Origin
 app.use(cors())
@@ -9,25 +11,29 @@ app.use(cors())
 //recebendo arquivos em formato json
 app.use(express.json())
 
-
+// Configuração do servidor
 const server_port = process.env.SERVER_PORT || 3000;
- 
-// conectando com o banco
-mongoose.connect("mongodb://gllmm:GvjzNgjDXFT29o0S7bmq6q9ww6JAAdltwa0aaMhM98Vamxx2JrI3oP3JBtUbyvRWgNlEcfDDVaZgACDbwN9H9w==@gllmm.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@gllmm@")
-.then(() =>{
-    console.log("Conectado ao banco com sucesso.")
-    app.listen( server_port, () =>{
-        console.log("Servidor aberto na porta: " + server_port)
-   
-    })
-   
-})
-.catch((erro) =>{
-    console.log("Erro ao conectar ao banco de dados: " + erro)
-})
- 
+const banco_string = process.env.BANCO_STRING; 
+const blob_string = process.env.BLOB_STRING;
+
+
+//middleware
 
 // rotas 
 const routes = require('./routes/router');
 app.use('/api', routes)
 
+
+
+// conectando com o banco
+mongoose.connect(banco_string)
+.then(() =>{
+    console.log("Conectado ao banco com sucesso.")
+   
+    app.listen( server_port, () =>{
+        console.log("Servidor aberto na porta: " + server_port)})
+})
+.catch((erro) =>{
+    console.log("Erro ao conectar ao banco de dados: " + erro)
+})
+ 
