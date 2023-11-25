@@ -5,6 +5,10 @@ const app = express();
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 
+// Import dos scripts
+const script_admin = require("./scripts/adminScript")
+const script_categoria = require("./scripts/categoriaScript")
+
 //permite que a API receba dados cross Origin
 app.use(cors())
 
@@ -17,7 +21,7 @@ dotenv.config()
 
 // Configuração do servidor
 const server_port = process.env.SERVER_PORT || 3000;
-const banco_string = process.env.BANCO_STRING; 
+const banco_string = process.env.BANCO_STRING || "mongodb://localhost:27017/ecommerce"; 
 const blob_string = process.env.BLOB_STRING;
 
 
@@ -32,6 +36,12 @@ mongoose.connect(banco_string)
    
     app.listen( server_port, "0.0.0.0",() =>{
         console.log("Servidor aberto na porta: " + server_port)})
+
+    // Chamando os scripts de insert caso o banco esteja vazio
+
+    script_admin()
+    script_categoria()
+
 })
 .catch((erro) =>{
     console.log("Erro ao conectar ao banco de dados: " + erro)

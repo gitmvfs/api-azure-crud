@@ -40,13 +40,13 @@ adminModelo.find()
 .then((result) =>{
 
     if(result != 0){
-        console.log("Usuarios ja cadastrados. ")
+        console.log("Administradores ja cadastrados. ")
     }
     else{
 
         adminModelo.insertMany([novoAdm1, novoAdm2, novoAdm3, novoAdm4, novoAdm5])
         .then((admSalvo) => {
-        console.log("Administrador salvo: " + admSalvo)
+        console.log("Administrador salvo com sucesso" )
     })
         .catch((erro) =>{
         console.log("Erro" + erro)
