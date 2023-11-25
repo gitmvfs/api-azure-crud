@@ -31,7 +31,7 @@ mongoose.connect(banco_string)
 .then(() =>{
     console.log("Conectado ao banco com sucesso.")
    
-    app.listen( server_port, () =>{
+    app.listen( server_port, "0.0.0.0",() =>{
         console.log("Servidor aberto na porta: " + server_port)})
 })
 .catch((erro) =>{
