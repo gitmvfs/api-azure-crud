@@ -3,13 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose")
-
+const dotenv = require("dotenv")
 
 //permite que a API receba dados cross Origin
 app.use(cors())
 
 //recebendo arquivos em formato json
 app.use(express.json())
+
+//configurando variaveis de ambiente
+
+
 
 // Configuração do servidor
 const server_port = process.env.SERVER_PORT || 3000;
@@ -18,6 +22,8 @@ const blob_string = process.env.BLOB_STRING;
 
 
 //middleware
+dotenv.config()
+
 
 // rotas 
 const routes = require('./routes/router');
