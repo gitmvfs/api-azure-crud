@@ -2,7 +2,7 @@ const dotenv = require("dotenv")
 dotenv.config({path: '../.env'})
 
 const azureStorage = require('azure-storage');
-const blobService = azureStorage.createBlobService(process.env.AZURE_BLOB_STRING);
+const blobService = azureStorage.createBlobService(process.env.BLOB_STRING);
 
 const containerName = 'imagens';
 const { Readable } = require('stream');

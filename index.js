@@ -23,8 +23,7 @@ const blob_string = process.env.BLOB_STRING;
 
 // rotas 
 const routes = require('./routes/router');
-app.use('/api', routes)
-
+app.use('', routes)
 
 // conectando com o banco
 mongoose.connect(banco_string)
