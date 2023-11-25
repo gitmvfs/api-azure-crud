@@ -12,6 +12,7 @@ app.use(cors())
 app.use(express.json())
 
 //configurando variaveis de ambiente
+dotenv.config()
 
 
 
@@ -22,7 +23,6 @@ const blob_string = process.env.BLOB_STRING;
 
 
 //middleware
-dotenv.config()
 
 
 // rotas 
