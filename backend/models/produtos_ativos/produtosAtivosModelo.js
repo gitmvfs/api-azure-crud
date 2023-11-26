@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const categoriaAtiva = require('../categoriaAtiva/schema')
+const categoriaAtiva = require('../categoriaAtiva/schema');
+const autoIncrementMiddleware = require('../../controllers/produtosController');
+const capitalizeFieldsMiddleware = require('../../controllers/produtosController');
 
 const produtoAtivoSchema = new mongoose.Schema({
     pk_idProduto: {
@@ -21,7 +23,7 @@ const produtoAtivoSchema = new mongoose.Schema({
     genero: {
         type: String,
         required: true,
-        enum: ['masculino', 'feminino', 'unissex']
+        enum: ['Masculino', 'Feminino', 'Unissex']
     },
     descricao: {
         type: String,
@@ -71,22 +73,8 @@ const produtoAtivoSchema = new mongoose.Schema({
     },
 });
 
-produtoAtivoSchema.pre('save', async function(next){
-    const doc = this;
-
-    if(!doc.pk_idProduto) {
-        Produto.findOne().sort('-pk_idProduto')
-        .then((produto) => {
-            doc.pk_idProduto = produto ? produto.pk_idProduto + 1 : 1;
-            next();
-        })
-        .catch((error) => {
-            return next(error);
-        });
-    } else {
-        next();
-    }
-});
+produtoAtivoSchema.pre('save', capitalizeFieldsMiddleware);
+produtoAtivoSchema.pre('save', autoIncrementMiddleware);
 
 const Produto = mongoose.model('Produto', produtoAtivoSchema);
 
