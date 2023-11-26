@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const categoriaAtiva = require('../categoriaAtiva/schema');
 const autoIncrementMiddleware = require('../../controllers/produtosController');
-const capitalizeFieldsMiddleware = require('../../controllers/produtosController');
+// const capitalizeFieldsMiddleware = require('../../controllers/produtosController');
 
 const produtoAtivoSchema = new mongoose.Schema({
     pk_idProduto: {
         type: Number,
         index: true,
-        required: true,
+        required: false,
         unique: true,
         integer: true
     },
@@ -73,8 +73,8 @@ const produtoAtivoSchema = new mongoose.Schema({
     },
 });
 
-produtoAtivoSchema.pre('save', capitalizeFieldsMiddleware);
 produtoAtivoSchema.pre('save', autoIncrementMiddleware);
+// produtoAtivoSchema.pre('save', capitalizeFieldsMiddleware);
 
 const Produto = mongoose.model('Produto', produtoAtivoSchema);
 

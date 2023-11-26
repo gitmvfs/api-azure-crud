@@ -3,13 +3,12 @@ const Produto = require('./produtosAtivosModelo')
 
 mongoose.Promise = global.Promise;
 
-const inserirProduto = () => {
+const inserirProduto = async () => {
 
     const novoProduto = new Produto({
-        pk_idProduto: 1,
-        nome: "carro",
+        nome: "arroz",
         preco: 1300,
-        genero: "feminino",
+        genero: "Feminino",
         descricao: "compre se não for usar",
         tamanhos: {
             PP: true
@@ -20,9 +19,9 @@ const inserirProduto = () => {
         linkFoto2:"",
         linkFoto3:"",
         fk_categoria: "6560f31c2c36b61f1ec14531"
-    })
+    });
 
-    novoProduto.save()
+    await novoProduto.save()
 }
 
 module.exports = inserirProduto
