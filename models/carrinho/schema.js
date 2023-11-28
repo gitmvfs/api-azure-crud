@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const carrinho = mongoose.schema('carrinho', {
+const carrinho = mongoose.Schema( {
     index:{
         type: Number,
         required:true
@@ -38,4 +38,4 @@ const carrinho = mongoose.schema('carrinho', {
     }
 })
 
-module.exports = carrinho;
+module.exports = mongoose.model('carrinho', carrinho);
