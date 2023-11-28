@@ -28,6 +28,9 @@ const blob_string = process.env.BLOB_STRING;
 // rotas 
 const routes = require('./routes/router');
 app.use('', routes)
+app.use('/CategoriaAtivaRouter', routes)
+app.use('/categoriaOcultaRouter', routes)
+app.use('/carrinhoRota', routes)
 
 // conectando com o banco
 mongoose.connect(banco_string)
