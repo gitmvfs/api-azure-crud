@@ -28,8 +28,7 @@ const produtoOcultoSchema = new mongoose.Schema({
     },
     tamanhos: {
         type: Array,
-        required: true,
-        enum: ['PP', 'P', 'M', 'G', 'GG', 'XGG']
+        required: true
     },
     cor: {
         type: Array,

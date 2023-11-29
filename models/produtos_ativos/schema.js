@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
-const categoriaAtiva = require('../categoriaAtiva/schema');
-const autoIncrementMiddleware = require('../../controllers/produtosController');
-// const capitalizeFieldsMiddleware = require('../../controllers/produtosController');
+const capitalizeMiddleware = require('../../controllers/produtos_controller');
+const categoria = require('../categoriaAtiva/schema')
 
 const produtoAtivoSchema = new mongoose.Schema({
     pk_idProduto: {
         type: Number,
         index: true,
-        required: false,
+        required: true,
         unique: true,
         integer: true
     },
@@ -23,7 +22,7 @@ const produtoAtivoSchema = new mongoose.Schema({
     genero: {
         type: String,
         required: true,
-        enum: ['Masculino', 'Feminino', 'Unissex']
+        enum: ['masculino', 'feminino', 'unissex']
     },
     descricao: {
         type: String,
@@ -44,7 +43,7 @@ const produtoAtivoSchema = new mongoose.Schema({
     tipo: {
         type: String,
         required: true,
-        enum: ['Vestido', 'Macacão', 'Calça', 'Blusa', 'Camisa', 'Calçado', 'Blazer', 'Paletó']
+        enum: ['vestido', 'macacão', 'calça', 'blusa', 'camisa', 'calçado', 'blazer', 'paletó']
     },
     linkFoto1: {
         type: String,
@@ -60,12 +59,12 @@ const produtoAtivoSchema = new mongoose.Schema({
         unique: true
     },
     fk_categoria: {
-        type: String,
+        type:  Number,
         required:true,
         ref: 'categoriaAtiva',
         validate: {
             validator: async function (value) {
-                const categoria_validacao = await categoriaAtiva.findOne({ _id: value });
+                const categoria_validacao = await categoria.findOne({ index: value });
                 return !!categoria_validacao;
             },
             message: 'Categoria não encontrada.',
@@ -73,8 +72,7 @@ const produtoAtivoSchema = new mongoose.Schema({
     },
 });
 
-produtoAtivoSchema.pre('save', autoIncrementMiddleware);
-// produtoAtivoSchema.pre('save', capitalizeFieldsMiddleware);
+produtoAtivoSchema.pre('save', capitalizeMiddleware);
 
 const Produto = mongoose.model('Produto', produtoAtivoSchema);
 

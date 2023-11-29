@@ -1,16 +1,18 @@
-const { produtoAtivo: produtoAtivoSchema } = require('../models/produtos_ativos/produtosAtivosModelo')
+const router = require("express").Router();
 
-const produtoController = {
+const { produtoAtivo: produtoAtivoSchema } = require('../models/produtos_ativos/schema')
+
+const produtoAtivoRota = {
 
     // rota post
     create: async(req, res) => {
         const produto = {
-            index: req.body.index,
+            pk_idProduto: req.body.pk_idProduto,
             nome: req.body.nome,
             preco: req.body.preco,
             genero: req.body.genero,
             descricao: req.body.descricao,
-            tamanhos: req.bodytamanhos,
+            tamanhos: req.body.tamanhos,
             cor: req.body.cor,
             tipo: req.body.tipo,
             linkFoto1: req.body.linkFoto1,
@@ -32,8 +34,8 @@ const produtoController = {
     // rota para pegar todos
     getAll: async(req, res) => {
         try{
-            const produto = await produtoAtivo.find()
-            res.json(produto)
+            const produtos = await produtoAtivo.find()
+            res.json(produtos)
         }
         catch(err){
             console.log(err)
@@ -76,12 +78,12 @@ const produtoController = {
         const id = req.params.id
 
         const produto = {
-            index: req.body.index,
+            pk_idProduto: req.body.pk_idProduto,
             nome: req.body.nome,
             preco: req.body.preco,
             genero: req.body.genero,
             descricao: req.body.descricao,
-            tamanhos: req.bodytamanhos,
+            tamanhos: req.body.tamanhos,
             cor: req.body.cor,
             tipo: req.body.tipo,
             linkFoto1: req.body.linkFoto1,
@@ -101,4 +103,21 @@ const produtoController = {
     }
 }
 
-module.exports = produtoController;
+// rota post
+router.route('/produtoAtivo').post((req, res) => produtoAtivoRota.create(req, res));
+
+// rota get all
+router.route('/produtos').get((req, res) => produtoAtivoRota.getAll(req, res));
+
+// rota getById
+router.route('/produto/:id').get((req, res) => produtoAtivoRota.get(req, res));
+
+// rota delete
+router
+    .route('/produto/:id')
+    .delete((req, res) => produtoAtivoRota.delete(req, res));
+
+// rota update
+router.route('/produto/:id').put((req, res) => produtoAtivoRota.update(req, res));
+
+module.exports = router;
