@@ -9,8 +9,7 @@ const categoriaAtiva = require('../models/categoriaAtiva/schema')
 
 
 const categoriaAtivaRota = {
-
-    let index = await auto_increment(categoriaAtiva)
+    
     // rota POST
     create: async (req, res) => {
         let index = await auto_increment(categoriaAtiva)
