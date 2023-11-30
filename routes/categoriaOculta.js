@@ -86,7 +86,10 @@ const categoriaOcultaRota = {
 router.route('/categoriaOculta').post((req, res) => categoriaOcultaRota.create(req, res));
 
 // rota GET ALL
+
+
 router.route('/categoriasOcultas').get((req, res) => categoriaOcultaRota.getAll(req, res));
+
 
 // rota GET
 router.route('/categoriaOculta/:id').get((req, res) => categoriaOcultaRota.get(req, res));

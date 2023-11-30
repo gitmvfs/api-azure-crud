@@ -57,6 +57,7 @@ const script_cadastrar = async() =>{
 
         await novaCategoria2.save()
 
+
         index = await auto_increment(categoriaModelo)
 
         const novaCategoria3 = new categoriaModelo({

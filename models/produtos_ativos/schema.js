@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+const capitalizeMiddleware = require('../../controllers/produtos_controller');
+const categoria = require('../categoriaAtiva/schema')
+
 const produtoAtivoSchema = new mongoose.Schema({
     pk_idProduto: {
         type: Number,
@@ -21,6 +24,7 @@ const produtoAtivoSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['Masculino', 'Feminino', 'Unissex']
+
     },
     descricao: {
         type: String,
@@ -30,6 +34,7 @@ const produtoAtivoSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['PP', 'P', 'M', 'G', 'GG', 'XGG']
+
     },
     cor: {
         type: Array,
@@ -38,7 +43,7 @@ const produtoAtivoSchema = new mongoose.Schema({
     tipo: {
         type: String,
         required: true,
-        enum: ['Vestido', 'Macacão', 'Calça', 'Blusa', 'Camisa', 'Calçado', 'Blazer', 'Paletó']
+        enum: ['vestido', 'macacão', 'calça', 'blusa', 'camisa', 'calçado', 'blazer', 'paletó']
     },
     linkFoto1: {
         type: String,
@@ -66,6 +71,8 @@ const produtoAtivoSchema = new mongoose.Schema({
         },
     },
 });
+
+produtoAtivoSchema.pre('save', capitalizeMiddleware);
 
 const Produto = mongoose.model('Produto', produtoAtivoSchema);
 
