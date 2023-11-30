@@ -13,6 +13,7 @@ const categoriaAtivaRota = {
     // rota POST
     create: async (req, res) => {
         let index = await auto_increment(categoriaSchema)
+        console.log(index)
         const categoria = {
             index: index,
             nome: req.body.nome,
