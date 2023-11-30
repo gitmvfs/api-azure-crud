@@ -4,6 +4,9 @@ const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const controllerLoginAdm = require('./controllers/controlllerLoginAdm')
+const controllerRegister = require('./controllers/controllerRegister')
+const controllerLoginUser = require('./controllers/controllerLoginUser')
 
 // Import dos scripts
 const script_admin = require("./scripts/adminScript")
@@ -30,6 +33,10 @@ const blob_string = process.env.BLOB_STRING;
 const routes = require('./routes/router');
 app.use('', routes)
 app.use('./produtoAtivoRouter', routes)
+
+app.use('/logar', controllerLoginAdm.post)
+app.use('/cadastro', controllerRegister.post)
+app.use('/loginUser', controllerLoginUser.post)
 
 // conectando com o banco
 mongoose.connect(banco_string, {dbName: 'e-fodase'})

@@ -1,7 +1,7 @@
 {
   "scripts": {
     "commit": "cz",
-    "start": "node backend\\index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "azure-storage": "^2.10.7",
