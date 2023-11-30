@@ -5,6 +5,7 @@ exports.post = async (req,res) => {
     try {
         // Insere os dados no banco
         const cadastrar = await userInsert.saveUser({
+            telefone: req.body.telefone,
             email: req.body.email,
             senha: req.body.senha
         });
