@@ -7,12 +7,13 @@ const auto_increment = require("../controllers/auto_increment")
 
 const { categoriaAtiva : categoriaSchema } = require('../models/categoriaAtiva/schema')
 
+const testeModelo = require("../models/categoriaAtiva/schema')
 
 const categoriaAtivaRota = {
     
     // rota POST
     create: async (req, res) => {
-        let index = await auto_increment(categoriaSchema)
+        let index = await auto_increment(testeModelo)
         console.log("teste index:" + index)
         const categoria = {
             index: index,
