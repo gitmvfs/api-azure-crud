@@ -1,7 +1,15 @@
 const mongoose = require('mongoose')
 
 const User = new mongoose.Schema({
-
+    
+    telefone: {
+        type: String,
+        require: true,
+        unique: true,
+        trim: true,
+        maxlenght: 11,
+        minlenght: 11
+    },
     email: {
         type: String,
         required: true,
