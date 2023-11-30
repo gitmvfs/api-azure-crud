@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { produtoAtivo: produtoAtivoSchema } = require('../models/produtos_ativos/schema')
+const { produtoAtivo} = require('../models/produtos_ativos/schema')
 
 const produtoAtivoRota = {
 
@@ -23,10 +23,11 @@ const produtoAtivoRota = {
 
         try{
             // criando resposta
-            const response = await produtoAtivoSchema.create(produto)
-            res.status(201).json({response})
+            // const response = await produtoAtivoSchema.create(produto)
+            res.status(201).json("funcionou a rota")
         }
         catch(err){
+            res.status(500).json({"Error msg":" cara eu vou matar o marques"})
             console.log(err)
         }
     },
