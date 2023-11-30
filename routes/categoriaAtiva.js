@@ -1,18 +1,20 @@
 const router = require('express').Router();
+const auto_increment = require("../controllers/auto_increment")
+
 
 // CRIAR AS ROTAS DE GET POST ETC
 
-const { categoriaAtiva: categoriaModel } = require('../models/categoriaAtiva/schema')
 
 const categoriaAtiva = require('../models/categoriaAtiva/schema')
 
 
 const categoriaAtivaRota = {
 
+    let index = await auto_increment(categoriaAtiva)
     // rota POST
     create: async (req, res) => {
         const categoria = {
-            index: req.body.index,
+            index: index,
             nome: req.body.nome,
             descricao: req.body.descricao,
             inicio: req.body.inicio,
