@@ -1,11 +1,7 @@
 const router = require('express').Router();
 
 // CRIAR AS ROTAS DE GET POST ETC
-
 const { categoriaAtiva: categoriaModel } = require('../models/categoriaAtiva/schema')
-
-const categoriaAtiva = require('../models/categoriaAtiva/schema')
-
 
 const categoriaAtivaRota = {
 
@@ -23,9 +19,7 @@ const categoriaAtivaRota = {
         try {
 
             //criando a resposta para enviar pro banco
-
-            const response = await categoriaAtiva.create(categoria)
-
+            const response = await categoriaModel.create(categoria)
 
             res.status(201).json({response})
 
@@ -50,7 +44,7 @@ const categoriaAtivaRota = {
         try {
             const id = req.params.id
 
-            const categoria = await categoriaAtiva.findOne(id)
+            const categoria = await categoriaAtiva.findById(id)
 
             if(!categoria){
                 res.status(404).json({msg: 'categoria não encontrada'})
@@ -67,7 +61,7 @@ const categoriaAtivaRota = {
     delete: async(req, res) => {
         const id = req.params.id
 
-        const categoria = await categoriaAtiva.findOne(id)
+        const categoria = await categoriaAtiva.findById(id)
         if (!categoria) {
           res.status(404).json({ msg: "categoria não encontrada" });
           return;
@@ -108,8 +102,7 @@ const categoriaAtivaRota = {
 router.route('/categoriaAtiva').post((req, res) => categoriaAtivaRota.create(req, res));
 
 //rota GET ALL
-router.route('/categorias').get((req, res) => categoriaAtivaRota.getAll(req, res));
-
+router.route('/categoria').get((req, res) => categoriaAtivaRota.getAll(req, res));
 
 // rota GET
 router.route('/categoria/:id').get((req, res) => categoriaAtivaRota.get(req, res))

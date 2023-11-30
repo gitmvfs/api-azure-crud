@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const capitalizeMiddleware = require('../../controllers/produtos_controller');
+const categoria = require('../categoriaAtiva/schema')
 
-const produtoOcultoSchema = new mongoose.Schema({
+const produtoAtivoSchema = new mongoose.Schema({
     pk_idProduto: {
         type: Number,
         index: true,
@@ -20,15 +22,19 @@ const produtoOcultoSchema = new mongoose.Schema({
     genero: {
         type: String,
         required: true,
-        enum: ['Masculino', 'Feminino', 'Unissex']
+        enum: ['masculino', 'feminino', 'unissex']
     },
     descricao: {
         type: String,
         required: true
     },
     tamanhos: {
-        type: Array,
-        required: true
+        PP: { type: Boolean, default: false },
+        P: { type: Boolean, default: false },
+        M: { type: Boolean, default: false },
+        G: { type: Boolean, default: false },
+        GG: { type: Boolean, default: false },
+        XGG: { type: Boolean, default: false },
     },
     cor: {
         type: Array,
@@ -37,7 +43,7 @@ const produtoOcultoSchema = new mongoose.Schema({
     tipo: {
         type: String,
         required: true,
-        enum: ['Vestido', 'Macacão', 'Calça', 'Blusa', 'Camisa', 'Calçado', 'Blazer', 'Paletó']
+        enum: ['vestido', 'macacão', 'calça', 'blusa', 'camisa', 'calçado', 'blazer', 'paletó']
     },
     linkFoto1: {
         type: String,
@@ -53,7 +59,7 @@ const produtoOcultoSchema = new mongoose.Schema({
         unique: true
     },
     fk_categoria: {
-        type: String,
+        type:  Number,
         required:true,
         ref: 'categoriaAtiva',
         validate: {
@@ -65,6 +71,8 @@ const produtoOcultoSchema = new mongoose.Schema({
         },
     },
 });
+
+produtoAtivoSchema.pre('save', capitalizeMiddleware);
 
 const ProdutoOculto = mongoose.model('ProdutoOculto', produtoOcultoSchema);
 

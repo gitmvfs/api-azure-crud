@@ -1,11 +1,15 @@
 const router = require("express").Router();
+const auto_increment = require("../controllers/auto_increment")
 
-const { produtoAtivo: produtoAtivoSchema } = require('../models/produtos_ativos/schema')
+const produtoAtivo = require('../models/produtos_ativos/schema');
+
+let index = auto_increment(produtoAtivo);
 
 const produtoAtivoRota = {
 
     // rota post
     create: async(req, res) => {
+
         const produto = {
             pk_idProduto: req.body.pk_idProduto,
             nome: req.body.nome,
@@ -23,7 +27,7 @@ const produtoAtivoRota = {
 
         try{
             // criando resposta
-            const response = await produtoAtivoSchema.create(produto)
+            const response = await produtoAtivo.create(produto)
             res.status(201).json({response})
         }
         catch(err){
@@ -35,7 +39,7 @@ const produtoAtivoRota = {
     getAll: async(req, res) => {
         try{
             const produtos = await produtoAtivo.find()
-            res.json(produtos)
+            res.send(produtos)
         }
         catch(err){
             console.log(err)
@@ -45,12 +49,12 @@ const produtoAtivoRota = {
     // pegar por id
     get: async(req, res) => {
         try{
-            const id = req.params.id
+            const id = req.params.pk_idProduto
 
-            const produto = await produtoAtivo.findById(id)
+            const produto = await produtoAtivo.findOne({pk_idProduto: id})
 
             if(!produto){
-                res.status(404).json({msg: 'produto não encontrado'})
+                res.status(404).send({msg: 'produto não encontrado'})
             }
         }
         catch(err){
@@ -60,9 +64,9 @@ const produtoAtivoRota = {
 
     // DELETE
     delete: async(req, res) => {
-        const id = req.params.id
+        const id = req.params.pk_idProduto
 
-        const produto = await produtoAtivo.findById(id)
+        const produto = await produtoAtivo.findOne(id)
 
         if(!produto){
             res.status(404).json({msg: 'produto não encontrado'})
@@ -71,11 +75,13 @@ const produtoAtivoRota = {
 
         const produtoDeletado = await produtoAtivo.findByIdAndDelete(id)
         res.status(201).json({produtoDeletado, msg:'produto deletado com sucesso'})
+
+        
     },
 
     // UPDATE
     update: async(req, res) => {
-        const id = req.params.id
+        const id = req.params.pk_idProduto
 
         const produto = {
             pk_idProduto: req.body.pk_idProduto,

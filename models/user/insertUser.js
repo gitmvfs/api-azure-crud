@@ -16,7 +16,7 @@ async function queryUsuario(query){
 
     //Consulta o usuário no banco
     const userSelected = await modelUser.findOne({
-        telefone: query.telefone,
+        telefone: body.telefone,
         email: query.email,
         senha: query.senha
     });
