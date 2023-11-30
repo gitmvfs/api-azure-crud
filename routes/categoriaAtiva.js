@@ -22,7 +22,7 @@ const categoriaAtivaRota = {
         const img = req.body.img
 
          const novaCategoria = new categoriaAtiva({
-        index: index,
+        index: 100,
         nome: nome,
         descricao: inicio,
         inicio: new Date(inicio), 
