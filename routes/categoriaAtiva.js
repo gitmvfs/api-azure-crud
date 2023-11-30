@@ -13,24 +13,35 @@ const categoriaAtivaRota = {
     
     // rota POST
     create: async (req, res) => {
-        let index = await auto_increment(testeModelo)
-        console.log("teste index:" + index)
-        const categoria = {
-            index: index,
-            nome: req.body.nome,
-            descricao: req.body.descricao,
-            inicio: req.body.inicio,
-            fim: req.body.fim,
-            img: req.body.img,
-        };
+        let index = await auto_increment(categoriaAtiva)
+
+        const nome = req.body.nome
+        const descricao = req.body.descricao
+        const inicio = req.body.inicio
+        const fim = req.body.fim
+        const img = req.body.img
+
+         const novaCategoria = new categoriaAtiva({
+        index: index,
+        nome: nome,
+        descricao: inicio,
+        inicio: new Date(inicio), 
+        fim: new Date(fim),   
+        img: img 
+         });
         
         try {
 
             //criando a resposta para enviar pro banco
-            const response = await categoriaAtiva.create(categoria)
+            novaCategoria.save()
+            .then(( resultado) =>{
 
+                res.json(" Cadastrado com sucesso " +resultado).status(201)
+            })
+            .catch((err)) =>{
 
-            res.status(201).json({response})
+                res.json({"err" : err}).status(400)
+            }
 
         } catch (error) {
             console.log(error)
