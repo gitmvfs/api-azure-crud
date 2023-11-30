@@ -58,6 +58,45 @@ const script_cadastrar = async() =>{
         await novaCategoria2.save()
 
 
+        index = await auto_increment(categoriaModelo)
+
+        const novaCategoria3 = new categoriaModelo({
+            index: index,
+            nome: "festa",
+            descricao: "Descubra uma seleção de roupas exclusivas projetadas para celebrar no verdadeiro estilo Ethereal Club.",
+            inicio: new Date("2023-01-01"), 
+            fim: new Date("2024-01-31"),   
+            img: "https://img.freepik.com/fotos-gratis/mulher-linda-com-cabelos-loiros-ondulados-usando-elegante-vestido-bege_273443-1771.jpg?w=360&t=st=1701128461~exp=1701129061~hmac=2090e1fc6848f00cbc7b7de05174bdd164e8086d0647e460683a59675a9f0007",
+            });
+    
+        await novaCategoria3.save()
+
+        index = await auto_increment(categoriaModelo)
+
+        const novaCategoria4 = new categoriaModelo({
+            index: index,
+            nome: "romantic",
+            descricao: "Surpreenda e/ou presenteie seu parceiro com a leveza e ternura da nossa coleção Romantic.",
+            inicio: new Date("2023-06-01"), 
+            fim: new Date("2024-06-30"),   
+            img: "https://img.freepik.com/fotos-gratis/jovem-se-preparando-para-o-casamento_23-2149329158.jpg?w=360&t=st=1701128622~exp=1701129222~hmac=58a6622315c0823dd60d60a740bfb84aeb8d37198da3f953b2295c7c316cc0fa",
+            });
+    
+        await novaCategoria4.save()
+
+        index = await auto_increment(categoriaModelo)
+
+        const novaCategoria5 = new categoriaModelo({
+            index: index,
+            nome: "casual",
+            descricao: "Se mantenha elegante e deslumbrante com Ethereal Club.",
+            inicio: new Date("2023-01-01"), 
+            fim: new Date("2024-12-31"),   
+            img: "https://img.freepik.com/fotos-gratis/retrato-da-moda-da-jovem-mulher-elegante_1328-2732.jpg?w=360&t=st=1701128747~exp=1701129347~hmac=6ee2b4420c3fd97ac6140272561c669dae8ad8ddf35d22840fa26ceccc01a3bf",
+            });
+    
+        await novaCategoria5.save()
+
     }
     catch(err){
 

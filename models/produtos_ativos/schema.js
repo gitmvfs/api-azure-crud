@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const capitalizeMiddleware = require('../../controllers/produtos_controller');
 const categoria = require('../categoriaAtiva/schema')
 
@@ -22,19 +23,18 @@ const produtoAtivoSchema = new mongoose.Schema({
     genero: {
         type: String,
         required: true,
-        enum: ['masculino', 'feminino', 'unissex']
+        enum: ['Masculino', 'Feminino', 'Unissex']
+
     },
     descricao: {
         type: String,
         required: true
     },
     tamanhos: {
-        PP: { type: Boolean, default: false },
-        P: { type: Boolean, default: false },
-        M: { type: Boolean, default: false },
-        G: { type: Boolean, default: false },
-        GG: { type: Boolean, default: false },
-        XGG: { type: Boolean, default: false },
+        type: String,
+        required: true,
+        enum: ['PP', 'P', 'M', 'G', 'GG', 'XGG']
+
     },
     cor: {
         type: Array,
@@ -59,7 +59,7 @@ const produtoAtivoSchema = new mongoose.Schema({
         unique: true
     },
     fk_categoria: {
-        type:  Number,
+        type: String,
         required:true,
         ref: 'categoriaAtiva',
         validate: {
