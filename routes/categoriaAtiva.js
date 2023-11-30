@@ -5,14 +5,14 @@ const auto_increment = require("../controllers/auto_increment")
 // CRIAR AS ROTAS DE GET POST ETC
 
 
-const categoriaAtiva = require('../models/categoriaAtiva/schema')
+const { categoriaAtiva : categoriaSchema } = require('../models/categoriaAtiva/schema')
 
 
 const categoriaAtivaRota = {
     
     // rota POST
     create: async (req, res) => {
-        let index = await auto_increment(categoriaAtiva)
+        let index = await auto_increment(categoriaSchema)
         const categoria = {
             index: index,
             nome: req.body.nome,
@@ -25,7 +25,6 @@ const categoriaAtivaRota = {
         try {
 
             //criando a resposta para enviar pro banco
-
             const response = await categoriaAtiva.create(categoria)
 
 
