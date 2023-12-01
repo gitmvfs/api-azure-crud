@@ -1,4 +1,4 @@
-const User = require('../models/user/userModel');
+const User = require('../models/user/schema');
 const { gerarToken } = require('./jwt');
 
 exports.post = (req, res, email) => {

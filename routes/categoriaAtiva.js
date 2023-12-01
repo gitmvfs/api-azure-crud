@@ -5,9 +5,8 @@ const auto_increment = require("../controllers/auto_increment")
 // CRIAR AS ROTAS DE GET POST ETC
 
 
-const { categoriaAtiva : categoriaSchema } = require('../models/categoriaAtiva/schema')
+const  categoriaAtiva  = require('../models/categoriaAtiva/schema')
 
-const testeModelo = require("../models/categoriaAtiva/schema')
 
 const categoriaAtivaRota = {
     
@@ -22,7 +21,7 @@ const categoriaAtivaRota = {
         const img = req.body.img
 
          const novaCategoria = new categoriaAtiva({
-        index: 100,
+        index: index,
         nome: nome,
         descricao: inicio,
         inicio: new Date(inicio), 
@@ -38,10 +37,10 @@ const categoriaAtivaRota = {
 
                 res.json(" Cadastrado com sucesso " +resultado).status(201)
             })
-            .catch((err)) =>{
+            .catch((err) =>{
 
                 res.json({"err" : err}).status(400)
-            }
+            })
 
         } catch (error) {
             console.log(error)
@@ -61,35 +60,41 @@ const categoriaAtivaRota = {
 
     // metodo GET BY ID
     get: async(req, res) => {
-        try {
-            const id = req.params.id
-
-            const categoria = await categoriaAtiva.findOne(id)
-
-            if(!categoria){
-                res.status(404).json({msg: 'categoria não encontrada'})
-                return;
-            }
-
-            res.json(categoria)
-        } catch (error) {
-            console.log(error);
-        }
+        const index = req.params.id
+        
+        categoriaAtiva.findOne({ index: index })
+            .then((categoriaRecuperada) => {
+                if (categoriaRecuperada) {
+                    res.status(201).json({ categoriaRecuperada, msg: 'Categoria encontrada com sucesso' });
+                } else {
+                    // Se o documento não foi encontrado
+                    res.status(404).json({ msg: 'Categoria não encontrada' });
+                }
+            })
+            .catch((err) => {
+                console.error('Erro ao recuperar categoria:', err);
+                res.status(500).json({ erro: 'Erro interno no servidor' });
+            });
     },
 
     //metodo DELETE
     delete: async(req, res) => {
-        const id = req.params.id
+        const index = req.params.id
+       
+    categoriaAtiva.findOneAndDelete({ index: index })
+        .then((categoriaDeletada) => {
+            if (categoriaDeletada) {
+                res.status(201).json({ categoriaDeletada, msg: 'Categoria deletada com sucesso' });
+            } else {
+                // Se o documento não foi encontrado
+                res.status(404).json({ msg: 'Categoria não encontrada' });
+            }
+        })
+        .catch((err) => {
+            console.error('Erro ao deletar categoria:', err);
+            res.status(500).json({ erro: 'Erro interno no servidor' });
+        });
 
-        const categoria = await categoriaAtiva.findOne(id)
-        if (!categoria) {
-          res.status(404).json({ msg: "categoria não encontrada" });
-          return;
-        }
-
-        const categoriaDeletada = await categoriaAtiva.findByIdAndDelete(id)
-
-        res.status(201).json({categoriaDeletada, msg: 'categoria deletada com sucesso'})
     },
 
     // metodo UPDATE
@@ -119,10 +124,10 @@ const categoriaAtivaRota = {
 
 
 //rota do metodo POST
-router.route('/categoriaAtiva').post((req, res) => categoriaAtivaRota.create(req, res));
+router.route('/categoria').post((req, res) => categoriaAtivaRota.create(req, res));
 
 //rota GET ALL
-router.route('/categorias').get((req, res) => categoriaAtivaRota.getAll(req, res));
+router.route('/categoria').get((req, res) => categoriaAtivaRota.getAll(req, res));
 
 
 // rota GET
