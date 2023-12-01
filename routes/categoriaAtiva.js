@@ -1,27 +1,44 @@
 const router = require('express').Router();
+const auto_increment = require("../controllers/auto_increment")
+
 
 // CRIAR AS ROTAS DE GET POST ETC
-const { categoriaAtiva: categoriaModel } = require('../models/categoriaAtiva/schema')
+const  categoriaAtiva  = require('../models/categoriaAtiva/schema')
+
 
 const categoriaAtivaRota = {
-
+    
     // rota POST
     create: async (req, res) => {
-        const categoria = {
-            index: req.body.index,
-            nome: req.body.nome,
-            descricao: req.body.descricao,
-            inicio: req.body.inicio,
-            fim: req.body.fim,
-            img: req.body.img,
-        };
+        let index = await auto_increment(categoriaAtiva)
+
+        const nome = req.body.nome
+        const descricao = req.body.descricao
+        const inicio = req.body.inicio
+        const fim = req.body.fim
+        const img = req.body.img
+
+         const novaCategoria = new categoriaAtiva({
+        index: index,
+        nome: nome,
+        descricao: descricao, 
+        inicio: new Date(inicio), 
+        fim: new Date(fim),   
+        img: img 
+         });
         
         try {
 
             //criando a resposta para enviar pro banco
-            const response = await categoriaModel.create(categoria)
+            novaCategoria.save()
+            .then(( resultado) =>{
 
-            res.status(201).json({response})
+                res.json(" Cadastrado com sucesso " +resultado).status(201)
+            })
+            .catch((err) =>{
+
+                res.json({"err" : err}).status(400)
+            })
 
         } catch (error) {
             console.log(error)
@@ -32,44 +49,51 @@ const categoriaAtivaRota = {
     getAll: async(req, res) => {
         try {
             const categorias = await categoriaAtiva.find()
-            res.json(categorias)
+            res.send(categorias).status200
             
         } catch (error) {
             console.log(error);
+            res.json({erro:err}).status(500)
         }
     },
 
     // metodo GET BY ID
     get: async(req, res) => {
-        try {
-            const id = req.params.id
-
-            const categoria = await categoriaAtiva.findById(id)
-
-            if(!categoria){
-                res.status(404).json({msg: 'categoria não encontrada'})
-                return;
-            }
-
-            res.json(categoria)
-        } catch (error) {
-            console.log(error);
-        }
+        const index = req.params.id
+        
+        categoriaAtiva.findOne({ index: index })
+            .then((categoriaRecuperada) => {
+                if (categoriaRecuperada) {
+                    res.status(201).send(categoriaRecuperada);
+                } else {
+                    // Se o documento não foi encontrado
+                    res.status(404).json({ msg: 'Categoria não encontrada' });
+                }
+            })
+            .catch((err) => {
+                console.error('Erro ao recuperar categoria:', err);
+                res.status(500).json({ erro: 'Erro interno no servidor' });
+            });
     },
 
     //metodo DELETE
     delete: async(req, res) => {
-        const id = req.params.id
+        const index = req.params.id
+       
+    categoriaAtiva.findOneAndDelete({ index: index })
+        .then((categoriaDeletada) => {
+            if (categoriaDeletada) {
+                res.status(201).json({ categoriaDeletada, msg: 'Categoria deletada com sucesso' });
+            } else {
+                // Se o documento não foi encontrado
+                res.status(404).json({ msg: 'Categoria não encontrada' });
+            }
+        })
+        .catch((err) => {
+            console.error('Erro ao deletar categoria:', err);
+            res.status(500).json({ erro: 'Erro interno no servidor' });
+        });
 
-        const categoria = await categoriaAtiva.findById(id)
-        if (!categoria) {
-          res.status(404).json({ msg: "categoria não encontrada" });
-          return;
-        }
-
-        const categoriaDeletada = await categoriaAtiva.findByIdAndDelete(id)
-
-        res.status(201).json({categoriaDeletada, msg: 'categoria deletada com sucesso'})
     },
 
     // metodo UPDATE
@@ -99,7 +123,7 @@ const categoriaAtivaRota = {
 
 
 //rota do metodo POST
-router.route('/categoriaAtiva').post((req, res) => categoriaAtivaRota.create(req, res));
+router.route('/categoria').post((req, res) => categoriaAtivaRota.create(req, res));
 
 //rota GET ALL
 router.route('/categoria').get((req, res) => categoriaAtivaRota.getAll(req, res));

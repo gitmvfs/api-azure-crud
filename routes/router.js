@@ -1,7 +1,6 @@
 const router = require('express').Router();
 
 const categoriaAtivaRouter = require('./categoriaAtiva');
-const categoriaOcultaRouter = require('./categoriaOculta');
 const imagemRota = require("./imagemRota");
 const loginUser = require('./LoginUser')
 const loginAdmin = require('./LoginAdm')

@@ -29,8 +29,11 @@ const produtoAtivoRota = {
             // criando resposta
             const response = await produtoAtivo.create(produto)
             res.status(201).json({response})
+            // const response = await produtoAtivoSchema.create(produto)
+            res.status(201).json("funcionou a rota")
         }
         catch(err){
+            res.status(500).json({"Error msg":" cara eu vou matar o marques"})
             console.log(err)
         }
     },

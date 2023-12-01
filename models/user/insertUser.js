@@ -1,4 +1,4 @@
-const modelUser = require('./userModel');
+const modelUser = require('./schema');
 
 async function saveUser(body){
 

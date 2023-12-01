@@ -1,5 +1,5 @@
-const dotenv = require("dotenv")
-dotenv.config({path: '../.env'})
+const dotenv = require("dotenv");
+dotenv.config({ path: '../.env' });
 
 const azureStorage = require('azure-storage');
 const blobService = azureStorage.createBlobService(process.env.BLOB_STRING);
@@ -8,7 +8,6 @@ const containerName = 'imagens';
 const { Readable } = require('stream');
 
 function inserir_fotos(files) {
-    
   // Pega cada arquivo mandado pelo formulário e cria uma promessa
   return files.map(file => {
     const blobName = file.originalname;
@@ -28,7 +27,9 @@ function inserir_fotos(files) {
         if (error) {
           reject(error);
         } else {
-          resolve(result);
+          // Construa o URL da imagem
+          const imageUrl = blobService.getUrl(containerName, blobName);
+          resolve(imageUrl);
         }
       });
     });

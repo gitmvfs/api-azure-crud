@@ -4,6 +4,8 @@ const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
 
 // Import dos scripts
 const script_admin = require("./scripts/adminScript")
@@ -24,6 +26,26 @@ dotenv.config()
 const server_port = process.env.SERVER_PORT || 3000;
 const banco_string = process.env.BANCO_STRING || "mongodb://localhost:27017/ecommerce"; 
 const blob_string = process.env.BLOB_STRING;
+
+// Defina as opções do Swagger JSDoc
+const options = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'Api Azure Crud',
+        version: '1.0.0',
+        description: 'A api tem como função desenvolver um modelo crud de ecommerce',
+      },
+    },
+    apis: ['./docs/categoria-doc.js'],
+  };
+  
+  const swaggerSpec = swaggerJSDoc(options);
+  
+  // Use o Swagger UI Express para servir a documentação Swagger
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+  
+
 
 
 // rotas 
