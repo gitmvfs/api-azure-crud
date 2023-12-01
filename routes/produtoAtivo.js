@@ -172,10 +172,7 @@ const produtosAtivaRotas = {
             res.status(500).json({ erro: {err} });
         });
 
-
-
-
-
+    }
 
 }
 
@@ -186,6 +183,8 @@ router.route('/produto').get((req, res) => produtosAtivaRotas.getAll(req, res));
 router.route('/produto/:id').get((req, res) => produtosAtivaRotas.get(req, res))
 
 router.route('/produto/:id').put((req, res) => produtosAtivaRotas.update(req, res))
+
+router.route('/produto/:id').delete((req, res) => produtosAtivaRotas.delete(req, res));
 
 
 module.exports = router;
