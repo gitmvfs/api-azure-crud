@@ -1,4 +1,4 @@
-const Admin = require("../models/admin/AdminModel")
+const Admin = require("../models/admin/schema")
 const { gerarToken } = require('./jwt');
 
 
