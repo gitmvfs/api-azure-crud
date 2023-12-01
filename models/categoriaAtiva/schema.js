@@ -26,7 +26,6 @@ const categoriaSchema = new mongoose.Schema({
 
     fim:{
         type:Date,
-        required:true
     },
 
     img:{

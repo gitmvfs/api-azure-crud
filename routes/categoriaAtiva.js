@@ -51,10 +51,11 @@ const categoriaAtivaRota = {
     getAll: async(req, res) => {
         try {
             const categorias = await categoriaAtiva.find()
-            res.json(categorias)
+            res.send(categorias).status200
             
         } catch (error) {
             console.log(error);
+            res.json({erro:err}).status(500)
         }
     },
 
