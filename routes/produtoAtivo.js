@@ -145,16 +145,33 @@ const produtosAtivaRotas = {
 
         }
 
-        const categoriaAtualizada = await categoriaAtiva.findByIdAndUpdate({index:index},novoProduto)
+        const produtoAtualizado = await produtoModelo.findByIdAndUpdate({index:index},novoProduto)
 
-        if (!categoriaAtualizada) {
+        if (!produtoAtualizado) {
           res.status(404).json({ msg: "Produto não encontrado" });
           return;
         }
 
-        res.status(200).json({categoriaAtualizada, msg: 'Produto atualizado'})
+        res.status(200).json({produtoAtualizado, msg: 'Produto atualizado'})
 
-    }
+    },
+
+    delete: async(req, res) => {
+        const index = req.params.id
+       
+    produtoModelo.findOneAndDelete({ index: index })
+        .then((produtoDeletado) => {
+            if (produtoDeletado) {
+                res.status(201).json({ produtoDeletado, msg: 'Produto deletado com sucesso' });
+            } else {
+                // Se o documento não foi encontrado
+                res.status(404).json({ msg: 'Produto não encontrada' });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ erro: {err} });
+        });
+
 
 
 
@@ -167,6 +184,8 @@ router.route('/produto').post((req, res) => produtosAtivaRotas.create(req, res))
 router.route('/produto').get((req, res) => produtosAtivaRotas.getAll(req, res));
 
 router.route('/produto/:id').get((req, res) => produtosAtivaRotas.get(req, res))
+
+router.route('/produto/:id').put((req, res) => produtosAtivaRotas.update(req, res))
 
 
 module.exports = router;
