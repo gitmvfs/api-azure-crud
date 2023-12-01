@@ -1,132 +1,105 @@
-const router = require("express").Router();
+const router = require('express').Router()
 const auto_increment = require("../controllers/auto_increment")
 
-const produtoAtivo = require('../models/produtos_ativos/schema');
+const produtoModelo = require('../models/produtos_ativos/schema')
+const categoriaModelo = require('../models/categoriaAtiva/schema')
 
-let index = auto_increment(produtoAtivo);
 
-const produtoAtivoRota = {
+const produtosAtivaRotas = {
 
-    // rota post
-    create: async(req, res) => {
 
-        const produto = {
-            pk_idProduto: req.body.pk_idProduto,
-            nome: req.body.nome,
-            preco: req.body.preco,
-            genero: req.body.genero,
-            descricao: req.body.descricao,
-            tamanhos: req.body.tamanhos,
-            cor: req.body.cor,
-            tipo: req.body.tipo,
-            linkFoto1: req.body.linkFoto1,
-            linkFoto2: req.body.linkFoto2,
-            linkFoto3: req.body.linkFoto3,
-            fk_categoria: req.body.fk_categoria,
-        };
+    create: async(req,res)=> {
 
-        try{
-            // criando resposta
-            const response = await produtoAtivo.create(produto)
-            res.status(201).json({response})
-            // const response = await produtoAtivoSchema.create(produto)
-            res.status(201).json("funcionou a rota")
-        }
-        catch(err){
-            res.status(500).json({"Error msg":" cara eu vou matar o marques"})
-            console.log(err)
-        }
-    },
+        let index = await auto_increment(produtoModelo)
 
-    // rota para pegar todos
-    getAll: async(req, res) => {
-        try{
-            const produtos = await produtoAtivo.find()
-            res.send(produtos)
-        }
-        catch(err){
-            console.log(err)
-        }
-    },
-
-    // pegar por id
-    get: async(req, res) => {
-        try{
-            const id = req.params.pk_idProduto
-
-            const produto = await produtoAtivo.findOne({pk_idProduto: id})
-
-            if(!produto){
-                res.status(404).send({msg: 'produto não encontrado'})
-            }
-        }
-        catch(err){
-            console.log(err)
-        }
-    },
-
-    // DELETE
-    delete: async(req, res) => {
-        const id = req.params.pk_idProduto
-
-        const produto = await produtoAtivo.findOne(id)
-
-        if(!produto){
-            res.status(404).json({msg: 'produto não encontrado'})
-            return;
-        }
-
-        const produtoDeletado = await produtoAtivo.findByIdAndDelete(id)
-        res.status(201).json({produtoDeletado, msg:'produto deletado com sucesso'})
-
+        const nome = req.body.nome
+        const preco = req.body.preco
+        const genero = req.body.genero
+        const descricao = req.body.descricao
+        const tamanhos = req.body.tamanhos
+        const cor = req.body.cor
+        const tipo = req.body.tipo
+        const linkFoto1 = req.body.linkFoto1
+        const linkFoto2 = req.body.linkFoto2
+        const linkFoto3 = req.body.linkFoto3
+        const categoriaNome = req.body.categoriaNome
         
-    },
+        let categoria_index = ""
+        // Pega o index da categoria pelo nome
+        await categoriaModelo.find({nome: req.body.categoriaNome}) 
+        .then((resultado) =>{
+            categoria_index = resultado[0].index
+            console.log("escopo local: "+ categoria_index)
+        })
 
-    // UPDATE
-    update: async(req, res) => {
-        const id = req.params.pk_idProduto
+        console.log(
+            index,
+            nome,
+            preco,
+            genero,
+            descricao,
+            tamanhos,
+            cor,
+            tipo,
+            categoria_index
+          )
 
-        const produto = {
-            pk_idProduto: req.body.pk_idProduto,
-            nome: req.body.nome,
-            preco: req.body.preco,
-            genero: req.body.genero,
-            descricao: req.body.descricao,
-            tamanhos: req.body.tamanhos,
-            cor: req.body.cor,
-            tipo: req.body.tipo,
-            linkFoto1: req.body.linkFoto1,
-            linkFoto2: req.body.linkFoto2,
-            linkFoto3: req.body.linkFoto3,
-            fk_categoria: req.body.fk_categoria,
-        };
+        const novoProduto = new produtoModelo({
+            
+            index:index,
+            nome:nome,
+            preco: preco,
+            genero:genero,
+            descricao:descricao,
+            tamanhos:tamanhos,
+            cor:cor,
+            tipo:tipo,
+            linkFoto1:linkFoto1,
+            linkFoto2:linkFoto2,
+            linkFoto3:linkFoto3,
+            fk_categoria: categoria_index
 
-        const produtoAtualizado = await produtoAtivo.findByIdAndUpdate(id, produto)
 
-        if(!produtoAtualizado){
-            res.status(404).json({msg: 'produto não encontrado'})
-            return;
+        })
+        try{
+            novoProduto.save()
+            .then((resultado) =>{
+
+                res.json("Cadastrado com sucesso" + resultado).status(201)
+
+            })
+            .catch((erro)  =>{
+                
+                res.json("Erro ao cadastrar:" + erro).status(400)
+
+            })
+        }
+        catch(error){
+
+            res.json("Erro do Banco de Dados: ").status(500)
+
         }
 
-        res.status(200).json({produtoAtualizado, msg: 'produto atualizado'})
-    }
+    
+    },
+
+    get: async(req, res) => {
+         try {
+            const produtos = await produtoModelo.find()
+            res.send(produtos).status(200)
+            
+        } catch (error) {
+            console.log(error);
+            res.json({erro:err}).status(500)
+        }
+    },
+
+
+
 }
 
-// rota post
-router.route('/produtoAtivo').post((req, res) => produtoAtivoRota.create(req, res));
+router.route('/produto').post((req, res) => produtosAtivaRotas.create(req, res));
+router.route('/produto').get((req, res) => produtosAtivaRotas.get(req, res));
 
-// rota get all
-router.route('/produtos').get((req, res) => produtoAtivoRota.getAll(req, res));
-
-// rota getById
-router.route('/produto/:id').get((req, res) => produtoAtivoRota.get(req, res));
-
-// rota delete
-router
-    .route('/produto/:id')
-    .delete((req, res) => produtoAtivoRota.delete(req, res));
-
-// rota update
-router.route('/produto/:id').put((req, res) => produtoAtivoRota.update(req, res));
 
 module.exports = router;

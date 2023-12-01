@@ -10,7 +10,8 @@ const categoriaSchema = new mongoose.Schema({
 
     nome:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
 
     descricao:{
