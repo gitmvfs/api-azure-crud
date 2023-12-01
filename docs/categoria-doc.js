@@ -84,6 +84,30 @@
  *       500:
  *         description: Erro no banco de dados.
  * 
+ *   put:
+ *     summary: Deleta uma categoria.
+ *     description: Endpoint para deletar uma nova categoria pelo id.
+ *     parameters:
+ *       - in: path
+ *         name: categoriaIndex
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da categoria a ser obtida.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/categoriaModelo'
+ *     responses:
+ *       201:
+ *         description: Categoria atualizada com sucesso.
+ *       400:
+ *         description: Parâmetros inválidos.
+ *       500:
+ *         description: Erro no banco de dados.
+ * 
  *   delete:
  *     summary: Deleta uma categoria.
  *     description: Endpoint para deletar uma nova categoria pelo id.

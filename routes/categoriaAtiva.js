@@ -64,15 +64,18 @@ const categoriaAtivaRota = {
         categoriaAtiva.findOne({ index: index })
             .then((categoriaRecuperada) => {
                 if (categoriaRecuperada) {
+                
                     res.status(201).send(categoriaRecuperada);
+              
                 } else {
                     // Se o documento não foi encontrado
                     res.status(404).json({ msg: 'Categoria não encontrada' });
                 }
             })
             .catch((err) => {
-                console.error('Erro ao recuperar categoria:', err);
-                res.status(500).json({ erro: 'Erro interno no servidor' });
+
+                res.status(500).json({ erro: err });
+           
             });
     },
 
@@ -98,7 +101,7 @@ const categoriaAtivaRota = {
 
     // metodo UPDATE
     update: async(req, res) => {
-        const id = req.params.id;
+        const index = req.params.id;
 
         const categoria = {
           index: req.body.index,
@@ -109,7 +112,7 @@ const categoriaAtivaRota = {
           img: req.body.img,
         };
 
-        const categoriaAtualizada = await categoriaAtiva.findByIdAndUpdate(id, categoria)
+        const categoriaAtualizada = await categoriaAtiva.findOneAndUpdate({index:index},categoria)
 
         if (!categoriaAtualizada) {
           res.status(404).json({ msg: "categoria não encontrada" });

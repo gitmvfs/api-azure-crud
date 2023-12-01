@@ -58,7 +58,7 @@ app.use('/register', routes)
 app.use('/loginUser', routes)
 
 // conectando com o banco
-mongoose.connect(banco_string, {dbName: 'e-fodase'})
+mongoose.connect(banco_string, {dbName: 'teste2'})
 .then(() =>{
     console.log("Conectado ao banco com sucesso.")
    
@@ -69,7 +69,7 @@ mongoose.connect(banco_string, {dbName: 'e-fodase'})
 
     script_admin()
     script_categoria()
-    script_produto()
+    // script_produto()
 
 })
 .catch((erro) =>{
