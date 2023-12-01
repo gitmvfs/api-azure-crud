@@ -9,7 +9,6 @@ const register = require('./Register')
 const produtoAtivoRouter = require('./produtoAtivo')
 
 router.use('', categoriaAtivaRouter);
-router.use('', categoriaOcultaRouter);
 router.use('', imagemRota);
 router.use('',produtoAtivoRouter); 
 router.use('', loginUser);

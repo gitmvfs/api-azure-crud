@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Admin = require("../models/admin/AdminModel")
+const Admin = require("../models/admin/schema")
 const { gerarToken } = require('../controllers/jwt');
 
 

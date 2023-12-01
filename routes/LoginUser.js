@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../models/user/userModel');
+const User = require('../models/user/schema');
 const { gerarToken } = require('../controllers/jwt');
 
 const loginUser = {
