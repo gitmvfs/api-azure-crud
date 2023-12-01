@@ -39,12 +39,12 @@ const options = {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Nome da sua API',
+        title: 'Api Azure Crud',
         version: '1.0.0',
-        description: 'Descrição da sua API',
+        description: 'A api tem como função desenvolver um modelo crud de ecommerce',
       },
     },
-    apis: ['./swagger-doc.js'],
+    apis: ['./docs/categoria-doc.js'],
   };
   
   const swaggerSpec = swaggerJSDoc(options);

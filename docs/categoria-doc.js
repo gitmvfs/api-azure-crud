@@ -47,7 +47,7 @@
  *           $ref: '#/definitions/categoriaModelo'
  *   
  *   post:
- *     summary: Criar uma nova categoria ativa.
+ *     summary: Criar uma nova categoria .
  *     description: Endpoint para criar uma nova categoria ativa.
  *     requestBody:
  *       required: true
@@ -66,9 +66,9 @@
  * 
  * 
  * /categoria/{categoriaIndex}:
- * get:
- *     summary: Deleta uma categoria.
- *     description: Endpoint para deletar uma nova categoria pelo id.
+ *   get:
+ *     summary: Retorna uma categoria.
+ *     description: Endpoint para retornar uma nova categoria pelo id.
  *     parameters:
  *       - in: path
  *         name: categoriaIndex
@@ -76,12 +76,6 @@
  *         schema:
  *           type: string
  *         description: ID da categoria a ser obtida.
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/categoriaDelete'
  *     responses:
  *       201:
  *         description: Categoria encontrada com sucesso.

@@ -65,7 +65,7 @@ const categoriaAtivaRota = {
         categoriaAtiva.findOne({ index: index })
             .then((categoriaRecuperada) => {
                 if (categoriaRecuperada) {
-                    res.status(201).json({ categoriaRecuperada, msg: 'Categoria encontrada com sucesso' });
+                    res.status(201).send(categoriaRecuperada);
                 } else {
                     // Se o documento não foi encontrado
                     res.status(404).json({ msg: 'Categoria não encontrada' });
