@@ -3,8 +3,6 @@ const auto_increment = require("../controllers/auto_increment")
 
 
 // CRIAR AS ROTAS DE GET POST ETC
-
-
 const  categoriaAtiva  = require('../models/categoriaAtiva/schema')
 
 
@@ -23,7 +21,7 @@ const categoriaAtivaRota = {
          const novaCategoria = new categoriaAtiva({
         index: index,
         nome: nome,
-        descricao: inicio,
+        descricao: descricao, 
         inicio: new Date(inicio), 
         fim: new Date(fim),   
         img: img 
@@ -129,7 +127,6 @@ router.route('/categoria').post((req, res) => categoriaAtivaRota.create(req, res
 
 //rota GET ALL
 router.route('/categoria').get((req, res) => categoriaAtivaRota.getAll(req, res));
-
 
 // rota GET
 router.route('/categoria/:id').get((req, res) => categoriaAtivaRota.get(req, res))

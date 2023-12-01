@@ -74,6 +74,6 @@ const produtoAtivoSchema = new mongoose.Schema({
 
 produtoAtivoSchema.pre('save', capitalizeMiddleware);
 
-const Produto = mongoose.model('Produto', produtoAtivoSchema);
+const ProdutoOculto = mongoose.model('ProdutoOculto', produtoOcultoSchema);
 
-module.exports = Produto
+module.exports = ProdutoOculto

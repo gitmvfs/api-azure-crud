@@ -5,8 +5,7 @@ const {Schema} = mongoose;
 const categoriaSchema = new mongoose.Schema({
     index:{
         type: Number,
-        required: true,
-        unique: true
+        required: true
     },
 
     nome:{

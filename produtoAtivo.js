@@ -29,12 +29,10 @@ const produtoAtivoRota = {
             // criando resposta
             const response = await produtoAtivo.create(produto)
             res.status(201).json({response})
-            // const response = await produtoAtivoSchema.create(produto)
-            res.status(201).json("funcionou a rota")
         }
-        catch(err){
-            res.status(500).json({"Error msg":" cara eu vou matar o marques"})
-            console.log(err)
+        catch(error){
+            res.status(500).send({status:500, message: "Servidor fora do ar"})
+            console.log(error)
         }
     },
 
@@ -43,8 +41,14 @@ const produtoAtivoRota = {
         try{
             const produtos = await produtoAtivo.find()
             res.send(produtos)
+
+            if(!produtos){
+                res.status(404).json({msg: 'produtos não encontrados'})
+                return;
+            }
         }
         catch(err){
+            res.status(500).send({status:500, message: "Servidor fora do ar"})
             console.log(err)
         }
     },
@@ -55,12 +59,15 @@ const produtoAtivoRota = {
             const id = req.params.pk_idProduto
 
             const produto = await produtoAtivo.findOne({pk_idProduto: id})
+            res.send(produto)
 
             if(!produto){
                 res.status(404).send({msg: 'produto não encontrado'})
+                return;
             }
         }
         catch(err){
+            res.status(500).send({status:500, message: "Servidor fora do ar"})
             console.log(err)
         }
     },

@@ -7,17 +7,10 @@ const dotenv = require("dotenv")
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
-
-const controllerLoginAdm = require('./controllers/controlllerLoginAdm')
-const controllerRegister = require('./controllers/controllerRegister')
-const controllerLoginUser = require('./controllers/controllerLoginUser')
-
-
 // Import dos scripts
 const script_admin = require("./scripts/adminScript")
 const script_categoria = require("./scripts/categoriaScript")
 const script_produto = require("./scripts/produtoScript")
-
 
 //permite que a API receba dados cross Origin
 app.use(cors())
@@ -58,18 +51,11 @@ const options = {
 // rotas 
 const routes = require('./routes/router');
 app.use('', routes)
-
 app.use('./produtoAtivoRouter', routes)
 
-app.use('/logar', controllerLoginAdm.post)
-app.use('/cadastro', controllerRegister.post)
-app.use('/loginUser', controllerLoginUser.post)
-
-// conectando com o banco
-
-app.use('/CategoriaAtivaRouter', routes)
-app.use('/categoriaOcultaRouter', routes)
-app.use('/carrinhoRota', routes)
+app.use('/loginAdmin', routes)
+app.use('/register', routes)
+app.use('/loginUser', routes)
 
 // conectando com o banco
 mongoose.connect(banco_string, {dbName: 'e-fodase'})
@@ -84,7 +70,6 @@ mongoose.connect(banco_string, {dbName: 'e-fodase'})
     script_admin()
     script_categoria()
     script_produto()
-
 
 })
 .catch((erro) =>{

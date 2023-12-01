@@ -2,17 +2,19 @@ const router = require('express').Router();
 
 const categoriaAtivaRouter = require('./categoriaAtiva');
 const imagemRota = require("./imagemRota");
-
+const loginUser = require('./LoginUser')
+const loginAdmin = require('./LoginAdm')
+const register = require('./Register')
 
 const produtoAtivoRouter = require('./produtoAtivo')
 
-const carrinhoRota = require('./rotaCarrinho')
-
-
 router.use('', categoriaAtivaRouter);
-router.use('', imagemRota)
-router.use('',produtoAtivoRouter) 
-router.use('', carrinhoRota)
+router.use('', categoriaOcultaRouter);
+router.use('', imagemRota);
+router.use('',produtoAtivoRouter); 
+router.use('', loginUser);
+router.use('', loginAdmin);
+router.use('', register);
 
 
 module.exports = router;
