@@ -157,7 +157,7 @@ router
         .deleteOne({ index: req.params.id })
         .then((resultado) => {
 
-          if(resultado > 0 ){
+          if(resultado.deletedCount > 0 ){
              res.status(200).json({ "Categoria deletada com sucesso": resultado });
           }
           else{

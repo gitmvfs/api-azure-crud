@@ -146,12 +146,6 @@
  *         schema:
  *           type: number
  *         description: ID da categoria a ser obtida.
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/categoriaDelete'
  *     responses:
  *       201:
  *         description: Categoria deletada com sucesso.

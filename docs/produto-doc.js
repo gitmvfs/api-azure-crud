@@ -5,43 +5,76 @@
  *     description: Operações relacionadas a produtos
  * 
  * definitions:
- *   categoriaModelo:
- *     type: object
- *     properties:
- *       nome:
- *         type: string
- *       descricao:
- *         type: string
- *       inicio:
- *         type: string
- *         format: date   
- *       fim:
- *         type: string
- *         format: date    
- *       img:
- *         type: string
- *    
- *   categoriaDelete:
+ *  produtoModelo:
  *     type: object
  *     properties:
  *       index:
+ *         type: integer
+ *         format: int32
+ *         uniqueItems: true
+ *       nome:
+ *         type: string
+ *         uniqueItems: true
+ *       preco:
  *         type: number
- *         
+ *       genero:
+ *         type: string
+ *         enum:
+ *           - masculino
+ *           - feminino
+ *           - unissex
+ *       descricao:
+ *         type: string
+ *       tamanhos:
+ *         type: array
+ *         items:
+ *           type: string
+ *           enum:
+ *             - PP
+ *             - P
+ *             - M
+ *             - G
+ *             - GG
+ *             - XGG
+ *       cor:
+ *         type: string
+ *       tipo:
+ *         type: string
+ *         enum:
+ *           - vestido
+ *           - macacão
+ *           - calça
+ *           - blusa
+ *           - camisa
+ *           - blazer
+ *           - paletó
+ *       linkFoto1:
+ *         type: string
+ *       linkFoto2:
+ *         type: string
+ *       linkFoto3:
+ *         type: string
+ *       categoriaNome:
+ *         type: string
+ *         description: Nome da categoria a ser vinculada
+ *    
+ *  
+  
  * /produto:
  *   post:
  *     tags:
  *       - Produto
- *     summary: Criar uma nova categoria.
- *     description: Endpoint para criar uma nova categoria ativa.
+ *     summary: Criar um novo produto.
+ *     description: Endpoint para criar um novo produto .
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/categoriaModelo'
+ *             $ref: '#/definitions/produtoModelo'
  *     responses:
  *       201:
- *         description: Categoria criada com sucesso.
+ *         description: Produto criado com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -58,49 +91,49 @@
  *       200:
  *         description: Sucesso
  *         schema:
- *           $ref: '#/definitions/categoriaModelo'
+ *           $ref: '#/definitions/produtoModelo'
  *       500:
  *         description: Erro no banco de dados
  *         schema:
- *           $ref: '#/definitions/categoriaModelo'
+ *           $ref: '#/definitions/produtoModelo'
  *   
  * /produto/quantidade/{quantidade}:
  *   get:
  *     tags:
  *       - Produto
- *     summary: Retorna uma certa quantidade de categorias.
- *     description: Endpoint para retornar uma nova categoria pelo id.
+ *     summary: Retorna uma certa quantidade de produtos.
+ *     description: Endpoint para retornar varios protudos de acordo com a quantidade.
  *     parameters:
  *       - in: path
  *         name: quantidade
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da categoria a ser obtida.
+ *         description: Quantidade de produtos a retornar.
  *     responses:
  *       201:
- *         description: Categoria encontrada com sucesso.
+ *         description: Produto encontrada com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
  *         description: Erro no banco de dados.
  * 
- * /produto/{categoriaIndex}:
+ * /produto/{produtoIndex}:
  *   get:
  *     tags:
  *       - Produto
- *     summary: Retorna uma categoria.
- *     description: Endpoint para retornar uma nova categoria pelo id.
+ *     summary: Retorna umm produto.
+ *     description: Endpoint para retornar uma nova produto pelo id.
  *     parameters:
  *       - in: path
- *         name: categoriaIndex
+ *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da categoria a ser obtida.
+ *         description: ID do produto a ser obtida.
  *     responses:
  *       201:
- *         description: Categoria encontrada com sucesso.
+ *         description: Produto encontrada com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -109,24 +142,24 @@
  *   put:
  *     tags:
  *       - Produto
- *     summary: Deleta uma categoria.
- *     description: Endpoint para deletar uma nova categoria pelo id.
+ *     summary: Deleta um produto.
+ *     description: Endpoint para deletar uma nova produto pelo id.
  *     parameters:
  *       - in: path
- *         name: categoriaIndex
+ *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da categoria a ser obtida.
+ *         description: ID da protudo a ser obtida.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/definitions/categoriaModelo'
+ *             $ref: '#/definitions/produtoModelo'
  *     responses:
  *       201:
- *         description: Categoria atualizada com sucesso.
+ *         description: Produto atualizada com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -135,24 +168,18 @@
  *   delete:
  *     tags:
  *       - Produto
- *     summary: Deleta uma categoria.
- *     description: Endpoint para deletar uma nova categoria pelo id.
+ *     summary: Deleta um produto.
+ *     description: Endpoint para deletar uma nova produto pelo id.
  *     parameters:
  *       - in: path
- *         name: categoriaIndex
+ *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da categoria a ser obtida.
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/categoriaDelete'
+ *         description: ID da produto para deletar.
  *     responses:
  *       201:
- *         description: Categoria deletada com sucesso.
+ *         description: Produto deletado com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:

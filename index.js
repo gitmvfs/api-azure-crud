@@ -39,7 +39,7 @@ const options = {
         description: 'A api tem como função desenvolver um modelo crud de ecommerce',
       },
     },
-    apis: ['./docs/categoria-doc.js','./docs/produto-doc.js'],
+    apis: ['./docs/*.js'],
   };
   
   const swaggerSpec = swaggerJSDoc(options);

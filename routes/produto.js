@@ -2,6 +2,7 @@ const router = require("express").Router();
 const produtoModelo = require("../models/produto/schema");
 const mongoose = require("mongoose");
 const auto_increment = require("../controllers/auto_increment");
+const categoriaModelo = require("../models/categoria/schema")
 
 router
 
@@ -36,7 +37,7 @@ router
     }
   })
 
-  .get("/categoria/:id", (req, res) => {
+  .get("/produto/:id", (req, res) => {
     try {
       produtoModelo.find({ index: req.params.id }).then((resultado) => {
         if (resultado.length > 0) {
@@ -58,22 +59,13 @@ router
       const preco = new String(req.body.preco);
       const genero = new String(req.body.genero);
       const descricao = new String(req.body.descricao);
-      const tamanhos = new Array(req.body.tamanhos);
+      const tamanhos = req.body.tamanhos.map(String);
       const cor = new String(req.body.cor);
       const tipo = new String(req.body.tipo);
       const linkFoto1 = new String(req.body.linkFoto1);
       const linkFoto2 = new String(req.body.linkFoto2);
       const linkFoto3 = new String(req.body.linkFoto3);
       const categoriaNome = new String(req.body.categoriaNome);
-
-      let categoria_index = "";
-
-      // Pega o index da categoria pelo nome
-      await categoriaModelo
-        .find({ nome: req.body.categoriaNome })
-        .then((resultado) => {
-          categoria_index = resultado[0].index;
-        });
 
       const novoProduto = new produtoModelo({
         index: index,
@@ -87,7 +79,7 @@ router
         linkFoto1: linkFoto1,
         linkFoto2: linkFoto2,
         linkFoto3: linkFoto3,
-        fk_categoria: categoria_index,
+        fk_categoria: categoriaNome,
       });
 
       const resultado = await novoProduto.save();
@@ -125,22 +117,13 @@ router
       const preco = new String(req.body.preco);
       const genero = new String(req.body.genero);
       const descricao = new String(req.body.descricao);
-      const tamanhos = new Array(req.body.tamanhos);
+      const tamanhos = req.body.tamanhos.map(String);
       const cor = new String(req.body.cor);
       const tipo = new String(req.body.tipo);
       const linkFoto1 = new String(req.body.linkFoto1);
       const linkFoto2 = new String(req.body.linkFoto2);
       const linkFoto3 = new String(req.body.linkFoto3);
       const categoriaNome = new String(req.body.categoriaNome);
-
-      let categoria_index = "";
-
-      // Pega o index da categoria pelo nome
-      await produtoModelo
-        .find({ nome: req.body.categoriaNome })
-        .then((resultado) => {
-          categoria_index = resultado[0].index;
-        });
 
       const novoProduto = {
         index: index,
@@ -154,7 +137,7 @@ router
         linkFoto1: linkFoto1,
         linkFoto2: linkFoto2,
         linkFoto3: linkFoto3,
-        fk_categoria: categoria_index,
+        fk_categoria: categoriaNome,
       };
 
       const resultado = await produtoModelo.findOneAndUpdate(
@@ -188,15 +171,16 @@ router
     }
   })
 
-  .delete("/categoria/:id", (req, res) => {
+  .delete("/produto/:id", (req, res) => {
     try {
       produtoModelo
         .deleteOne({ index: req.params.id })
         .then((resultado) => {
-          if (resultado > 0) {
+          if (resultado.deletedCount > 0) {
             res.status(200).json({ "Produto deletado com sucesso": resultado });
           } else {
             res.status(404).json("Produto não encontrado");
+            console.log(resultado)
           }
         })
         .catch((erro) => {
