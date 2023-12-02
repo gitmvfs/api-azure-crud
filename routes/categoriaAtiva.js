@@ -14,17 +14,21 @@ const categoriaAtivaRota = {
 
         const nome = req.body.nome
         const descricao = req.body.descricao
-        const inicio = req.body.inicio
-        const fim = req.body.fim
+        const inicio = new Date(req.body.inicio)
+        const fim = new Date(req.body.fim)
         const img = req.body.img
+        
+        inicio.setDate(inicio.getDate() + 1);
+        fim.setDate(fim.getDate() + 1);
+
 
          const novaCategoria = new categoriaAtiva({
-        index: index,
-        nome: nome,
-        descricao: descricao, 
-        inicio: new Date(inicio), 
-        fim: new Date(fim),   
-        img: img 
+            index: index,
+            nome: nome,
+            descricao: descricao, 
+            inicio: inicio, 
+            fim: fim,   
+            img: img 
          });
         
         try {
@@ -93,37 +97,39 @@ const categoriaAtivaRota = {
             }
         })
         .catch((err) => {
-            console.error('Erro ao deletar categoria:', err);
             res.status(500).json({ erro: 'Erro interno no servidor' });
         });
 
     },
 
     // metodo UPDATE
-    update: async(req, res) => {
+    update: async (req, res) => {
         const index = req.params.id;
-
+        
         const categoria = {
-          index: req.body.index,
-          nome: req.body.nome,
-          descricao: req.body.descricao,
-          inicio: req.body.inicio,
-          fim: req.body.fim,
-          img: req.body.img,
-        };
+            nome: req.body.nome,
+            descricao: req.body.descricao,
+            inicio: new Date(req.body.inicio),
+            fim: new Date(req.body.fim),
+            img: req.body.img,
+          };
+          categoria.inicio.setDate(categoria.inicio.getDate() + 1);
+          categoria.fim.setDate(categoria.inicio.getDate() + 1);
+        
+        console.log(categoria)
 
-        const categoriaAtualizada = await categoriaAtiva.findOneAndUpdate({index:index},categoria)
-
+        // Usando o _id para identificar o documento no MongoDB
+        const categoriaAtualizada = await categoriaAtiva.findOneAndUpdate({ index: index }, categoria, { new: true });
+      
         if (!categoriaAtualizada) {
-          res.status(404).json({ msg: "categoria não encontrada" });
+          res.status(404).json({ msg: "Categoria não encontrada" });
           return;
         }
-
-        res.status(200).json({categoriaAtualizada, msg: 'categoria atualizada'})
-    }
-
+      
+        res.status(200).json({ categoriaAtualizada, msg: 'Categoria atualizada' });
+      }
+      
 }
-
 
 //rota do metodo POST
 router.route('/categoria').post((req, res) => categoriaAtivaRota.create(req, res));
