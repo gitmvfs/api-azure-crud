@@ -47,15 +47,12 @@ const produtoAtivoSchema = new mongoose.Schema({
     linkFoto1: {
         type: String,
         required: true,
-        unique: true
     },
     linkFoto2: {
         type: String,
-        unique: true
     },
     linkFoto3: {
         type: String,
-        unique: true
     },
     fk_categoria: {
         type:  Number,

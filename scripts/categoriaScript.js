@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const categoriaModelo = require("../models/categoriaAtiva/schema")
+const categoriaModelo = require("../models/categoria/schema")
 const auto_increment = require("../controllers/auto_increment")
 
 mongoose.Promise = global.Promise;

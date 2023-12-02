@@ -10,7 +10,6 @@ const swaggerUI = require('swagger-ui-express');
 // Import dos scripts
 const script_admin = require("./scripts/adminScript")
 const script_categoria = require("./scripts/categoriaScript")
-const script_produto = require("./scripts/produtoScript")
 
 //permite que a API receba dados cross Origin
 app.use(cors())
@@ -45,20 +44,15 @@ const options = {
   // Use o Swagger UI Express para servir a documentação Swagger
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   
-
-
-
 // rotas 
 const routes = require('./routes/router');
+
 app.use('', routes)
 app.use('./produtoAtivoRouter', routes)
 
-app.use('/loginAdmin', routes)
-app.use('/register', routes)
-app.use('/loginUser', routes)
 
 // conectando com o banco
-mongoose.connect(banco_string, {dbName: 'teste2'})
+mongoose.connect(banco_string, {dbName: 'testeFinal'})
 .then(() =>{
     console.log("Conectado ao banco com sucesso.")
    
