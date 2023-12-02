@@ -8,14 +8,14 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
 // Import dos scripts
-const script_admin = require("./scripts/adminScript")
+// const script_admin = require("./scripts/adminScript")
 const script_categoria = require("./scripts/categoriaScript")
 
 //permite que a API receba dados cross Origin
 app.use(cors())
+app.use(express.json())
 
 //recebendo arquivos em formato json
-app.use(express.json())
 
 //configurando variaveis de ambiente
 dotenv.config()
@@ -27,6 +27,7 @@ const banco_string = process.env.BANCO_STRING || "mongodb://localhost:27017/ecom
 const blob_string = process.env.BLOB_STRING;
 
 // Defina as opções do Swagger JSDoc
+
 const options = {
     definition: {
       openapi: '3.0.0',
@@ -45,10 +46,10 @@ const options = {
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   
 // rotas 
-const routes = require('./routes/router');
 
-app.use('', routes)
-app.use('./produtoAtivoRouter', routes)
+const rota_categoria = require("./routes/categoria")
+
+app.use('',rota_categoria)
 
 
 // conectando com o banco
@@ -61,10 +62,15 @@ mongoose.connect(banco_string, {dbName: 'testeFinal'})
 
     // Chamando os scripts de insert caso o banco esteja vazio
 
-    script_admin()
-    script_categoria()
-    // script_produto()
+    const executar_script = async() => {
 
+    // script_admin()
+    await script_categoria()
+    // script_produto()
+    }
+
+    executar_script()
+    
 })
 .catch((erro) =>{
     console.log("Erro ao conectar ao banco de dados: " + erro)
