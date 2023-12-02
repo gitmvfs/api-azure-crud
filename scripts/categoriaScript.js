@@ -103,11 +103,6 @@ const script_cadastrar = async() =>{
         console.log("Erro ao executar script categoria: " + err)
 
     }
-    finally{
-
-        console.log("Categoria cadastrada com sucesso")
-
-    }
 
 }
     

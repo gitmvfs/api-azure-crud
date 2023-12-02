@@ -1,5 +1,11 @@
 /**
  * @swagger
+ * tags:
+ *   - name: Produto
+ *     description: Operações relacionadas a produtos
+ *   - name: Categoria
+ *     description: Operações relacionadas a categorias
+ * 
  * definitions:
  *   categoriaModelo:
  *     type: object
@@ -23,14 +29,11 @@
  *       index:
  *         type: number
  *         
- */
-
-
-/**
- * @swagger
  * /categoria:
- *  post:
- *     summary: Criar uma nova categoria .
+ *   post:
+ *     tags:
+ *       - Categoria
+ *     summary: Criar uma nova categoria.
  *     description: Endpoint para criar uma nova categoria ativa.
  *     requestBody:
  *       required: true
@@ -45,10 +48,12 @@
  *         description: Parâmetros inválidos.
  *       500:
  *         description: Erro no banco de dados.
- * 
- *  get:
- *     summary: Descrição resumida da rota
- *     description: Descrição mais detalhada da rota
+ *
+ *   get:
+ *     tags:
+ *       - Categoria
+ *     summary: Descrição resumida da rota.
+ *     description: Descrição mais detalhada da rota.
  *     produces:
  *       - application/json
  *     responses:
@@ -61,10 +66,10 @@
  *         schema:
  *           $ref: '#/definitions/categoriaModelo'
  *   
- *   
- * 
  * /categoria/quantidade/{quantidade}:
  *   get:
+ *     tags:
+ *       - Categoria
  *     summary: Retorna uma certa quantidade de categorias.
  *     description: Endpoint para retornar uma nova categoria pelo id.
  *     parameters:
@@ -82,9 +87,10 @@
  *       500:
  *         description: Erro no banco de dados.
  * 
- * 
  * /categoria/{categoriaIndex}:
  *   get:
+ *     tags:
+ *       - Categoria
  *     summary: Retorna uma categoria.
  *     description: Endpoint para retornar uma nova categoria pelo id.
  *     parameters:
@@ -103,6 +109,8 @@
  *         description: Erro no banco de dados.
  * 
  *   put:
+ *     tags:
+ *       - Categoria
  *     summary: Deleta uma categoria.
  *     description: Endpoint para deletar uma nova categoria pelo id.
  *     parameters:
@@ -127,6 +135,8 @@
  *         description: Erro no banco de dados.
  * 
  *   delete:
+ *     tags:
+ *       - Categoria
  *     summary: Deleta uma categoria.
  *     description: Endpoint para deletar uma nova categoria pelo id.
  *     parameters:
@@ -149,8 +159,4 @@
  *         description: Parâmetros inválidos.
  *       500:
  *         description: Erro no banco de dados.
- * 
- * 
  */
-
- 

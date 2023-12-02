@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 // const capitalizeMiddleware = require('../../controllers/produtos_controller');
-const categoria = require('../categoriaAtiva/schema')
+const categoria = require('../categoria/schema')
 
 const produtoAtivoSchema = new mongoose.Schema({
     index: {
@@ -57,10 +57,10 @@ const produtoAtivoSchema = new mongoose.Schema({
     fk_categoria: {
         type:  Number,
         required:true,
-        ref: 'categoriaAtiva',
+        ref: 'categoria',
         validate: {
             validator: async function (value) {
-                const categoria_validacao = await categoria.findOne({ index: value });
+                const categoria_validacao = await categoria.findOne({ nome: value });
                 return !!categoria_validacao;
             },
             message: 'Categoria não encontrada.',
