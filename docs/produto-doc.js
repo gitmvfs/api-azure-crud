@@ -5,7 +5,7 @@
  *     description: Operações relacionadas a produtos
  * 
  * definitions:
- *  produtoModelo:
+ *   produtoModelo:
  *     type: object
  *     properties:
  *       index:
@@ -58,7 +58,11 @@
  *         type: string
  *         description: Nome da categoria a ser vinculada
  *    
- *  
+ *   produtoDelete:
+ *      type: object
+ *      properties:
+ *        index:
+ *          type: number
   
  * /produto:
  *   post:
@@ -112,7 +116,7 @@
  *         description: Quantidade de produtos a retornar.
  *     responses:
  *       201:
- *         description: Produto encontrada com sucesso.
+ *         description: Produto encontrado com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -122,18 +126,18 @@
  *   get:
  *     tags:
  *       - Produto
- *     summary: Retorna umm produto.
- *     description: Endpoint para retornar uma nova produto pelo id.
+ *     summary: Retorna um produto.
+ *     description: Endpoint para retornar um novo produto pelo id.
  *     parameters:
  *       - in: path
  *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID do produto a ser obtida.
+ *         description: ID do produto a ser obtido.
  *     responses:
  *       201:
- *         description: Produto encontrada com sucesso.
+ *         description: Produto encontrado com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -143,14 +147,14 @@
  *     tags:
  *       - Produto
  *     summary: Deleta um produto.
- *     description: Endpoint para deletar uma nova produto pelo id.
+ *     description: Endpoint para atualizar um produto pelo id.
  *     parameters:
  *       - in: path
  *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da protudo a ser obtida.
+ *         description: ID do produto a ser obtido.
  *     requestBody:
  *       required: true
  *       content:
@@ -159,7 +163,7 @@
  *             $ref: '#/definitions/produtoModelo'
  *     responses:
  *       201:
- *         description: Produto atualizada com sucesso.
+ *         description: Produto atualizado com sucesso.
  *       400:
  *         description: Parâmetros inválidos.
  *       500:
@@ -169,14 +173,14 @@
  *     tags:
  *       - Produto
  *     summary: Deleta um produto.
- *     description: Endpoint para deletar uma nova produto pelo id.
+ *     description: Endpoint para deletar um produto pelo id.
  *     parameters:
  *       - in: path
  *         name: produtoIndex
  *         required: true
  *         schema:
  *           type: number
- *         description: ID da produto para deletar.
+ *         description: ID do produto para deletar.
  *     responses:
  *       201:
  *         description: Produto deletado com sucesso.

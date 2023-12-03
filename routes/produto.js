@@ -83,7 +83,7 @@ router
       });
 
       const resultado = await novoProduto.save();
-      res.status(201).json("Produto cadastrada com sucesso");
+      res.status(201).json("Produto cadastrado com sucesso");
     } catch (error) {
       if (error.name === "ValidationError") {
         // Erros de validação

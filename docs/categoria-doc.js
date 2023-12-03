@@ -111,8 +111,8 @@
  *   put:
  *     tags:
  *       - Categoria
- *     summary: Deleta uma categoria.
- *     description: Endpoint para deletar uma nova categoria pelo id.
+ *     summary: Atualiza uma categoria.
+ *     description: Endpoint para atualizar uma categoria pelo id.
  *     parameters:
  *       - in: path
  *         name: categoriaIndex
