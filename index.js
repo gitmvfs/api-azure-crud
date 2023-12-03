@@ -8,15 +8,17 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 
 // Import dos scripts
+
 const script_admin = require("./scripts/adminScript")
 const script_categoria = require("./scripts/categoriaScript")
 const script_produto = require("./scripts/produtoScript")
 
+
 //permite que a API receba dados cross Origin
 app.use(cors())
+app.use(express.json())
 
 //recebendo arquivos em formato json
-app.use(express.json())
 
 //configurando variaveis de ambiente
 dotenv.config()
@@ -28,6 +30,7 @@ const banco_string = process.env.BANCO_STRING || "mongodb://localhost:27017/ecom
 const blob_string = process.env.BLOB_STRING;
 
 // Defina as opções do Swagger JSDoc
+
 const options = {
     definition: {
       openapi: '3.0.0',
@@ -37,7 +40,7 @@ const options = {
         description: 'A api tem como função desenvolver um modelo crud de ecommerce',
       },
     },
-    apis: ['./docs/categoria-doc.js'],
+    apis: ['./docs/*.js'],
   };
   
   const swaggerSpec = swaggerJSDoc(options);
@@ -45,20 +48,20 @@ const options = {
   // Use o Swagger UI Express para servir a documentação Swagger
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
   
-
-
-
 // rotas 
-const routes = require('./routes/router');
-app.use('', routes)
-app.use('./produtoAtivoRouter', routes)
 
-app.use('/loginAdmin', routes)
-app.use('/register', routes)
-app.use('/loginUser', routes)
+const rota_categoria = require("./routes/categoria")
+const rota_produto = require("./routes/produto")
+const rota_imagem = require("./routes/imagem")
+const rota_admin = require("./routes/admin")
+
+app.use('',rota_categoria)
+app.use('',rota_produto)
+app.use('',rota_imagem)
+app.use('',rota_admin)
 
 // conectando com o banco
-mongoose.connect(banco_string, {dbName: 'e-fodase'})
+mongoose.connect(banco_string, {dbName: 'testeFinal'})
 .then(() =>{
     console.log("Conectado ao banco com sucesso.")
    
@@ -67,10 +70,16 @@ mongoose.connect(banco_string, {dbName: 'e-fodase'})
 
     // Chamando os scripts de insert caso o banco esteja vazio
 
+    const executar_script = async() => {
+
     script_admin()
-    script_categoria()
+    await script_categoria()
     script_produto()
 
+    }
+
+    executar_script()
+    
 })
 .catch((erro) =>{
     console.log("Erro ao conectar ao banco de dados: " + erro)

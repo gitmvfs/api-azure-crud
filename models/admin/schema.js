@@ -16,7 +16,7 @@ const Admin = new mongoose.Schema({
     token: {
         type: String,
         require: false,
-        unique: true,
+        // unique: true,
         trim: true
     }
 });

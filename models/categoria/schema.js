@@ -5,12 +5,15 @@ const {Schema} = mongoose;
 const categoriaSchema = new mongoose.Schema({
     index:{
         type: Number,
-        required: true
+        required: true,
+        unique:true,
+        interger:true
     },
 
     nome:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
 
     descricao:{
@@ -33,4 +36,4 @@ const categoriaSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('categoriaAtiva', categoriaSchema);
+module.exports = mongoose.model('categoria', categoriaSchema);
