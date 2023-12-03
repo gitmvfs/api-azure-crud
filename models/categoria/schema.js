@@ -36,4 +36,4 @@ const categoriaSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('categoriaAtiva', categoriaSchema);
+module.exports = mongoose.model('categoria', categoriaSchema);

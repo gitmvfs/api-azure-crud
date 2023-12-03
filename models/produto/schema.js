@@ -71,4 +71,4 @@ const produtoAtivoSchema = new mongoose.Schema({
 // produtoAtivoSchema.pre('save', capitalizeMiddleware);
 
 
-module.exports = mongoose.model('Produto', produtoAtivoSchema);
+module.exports = mongoose.model('produto', produtoAtivoSchema);

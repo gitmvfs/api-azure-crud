@@ -1,6 +1,5 @@
 const router = require("express").Router();
 
-const express = require("express");
 const blob_azure = require("../controllers/blob_azure");
 
 // Biblioteca para aceitar arquivos de mídia
@@ -18,7 +17,7 @@ router.post("/imagem", upload.array("images"), (req, res) => {
   if (!files || files.length === 0) {
     return res.status(400).send("Nenhum arquivo enviado.");
   } else {
-    const uploadPromises = inserir_fotos(files);
+    const uploadPromises = blob_azure(files);
 
     // Aguarda todos os uploads concluírem
     Promise.all(uploadPromises)
