@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const controller_login = async (email, senha, modelo) => {
-
   try {
     const resultado = await modelo.find({ email: email });
 
@@ -22,4 +21,6 @@ const controller_login = async (email, senha, modelo) => {
   }
 };
 
-module.exports = controller_login;
+
+
+module.exports = { controller_login};
