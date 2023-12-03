@@ -51,10 +51,11 @@ const options = {
 
 const rota_categoria = require("./routes/categoria")
 const rota_produto = require("./routes/produto")
+const rota_imagem = require("./routes/imagem")
 
 app.use('',rota_categoria)
 app.use('',rota_produto)
-
+app.use('',rota_imagem)
 
 // conectando com o banco
 mongoose.connect(banco_string, {dbName: 'testeFinal'})
