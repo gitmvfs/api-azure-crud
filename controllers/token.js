@@ -66,7 +66,8 @@ const removerToken = async (email, token, modelo) => {
           return 200; //Token removido com sucesso
           
         })
-        .catch(() =>{
+        .catch((erro) =>{
+          console.log(erro)
           return 500 // falha ao tentar remover o token
         })
       } else {
