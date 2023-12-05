@@ -111,7 +111,6 @@ router
 
   .put("/produto/:id", async (req, res) => {
     try {
-      let index = await auto_increment(produtoModelo);
 
       const nome = new String(req.body.nome);
       const preco = new String(req.body.preco);
@@ -126,7 +125,7 @@ router
       const categoriaNome = new String(req.body.categoriaNome);
 
       const novoProduto = {
-        index: index,
+
         nome: nome,
         preco: preco,
         genero: genero,
