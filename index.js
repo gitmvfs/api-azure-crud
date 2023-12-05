@@ -55,11 +55,7 @@ const rota_produto = require("./routes/produto")
 const rota_imagem = require("./routes/imagem")
 const rota_admin = require("./routes/admin")
 
-app.use((req, res, next) => {
-  // Configura cabeçalhos para permitir o cache
-  res.setHeader('Cache-Control', 'public, max-age=300'); // 300 segundos (5 minutos)
-  next();
-});
+
 app.use('',rota_categoria)
 app.use('',rota_produto)
 app.use('',rota_imagem)
