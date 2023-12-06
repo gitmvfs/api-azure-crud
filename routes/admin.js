@@ -105,8 +105,39 @@ router.post("/admin/logout", async(req,res) => {
 
 })
 
+router.put("/admin/update", async (req, res) => {
 
+  try {
+    const email_admin = req.body.email;
+    const nova_senha = req.body.nova_senha;
 
+    const usuarioExiste = await adminModelo.findOne({ email: email_admin });
 
+    if (!usuarioExiste) {
+      return res.status(404).json("Usuário não encontrado");
+    }
+
+    const resultUpdate = await atualizarSenha(
+      email_admin,
+      nova_senha,
+      adminModelo
+    );
+
+    switch (resultUpdate) {
+      case 200:
+        res.status(200).json("Senha atualizada com sucesso");
+        break;
+        
+      case 401:
+        res.status(401).json('Não foi possivel atualizar a senha')
+
+      default:
+        res.status(500).json("Erro interno do servidor");
+        break;
+    }
+  } catch (erro) {
+    res.status(500).json("Erro interno do servidor: " + erro);
+  }
+});
 
 module.exports = router;
