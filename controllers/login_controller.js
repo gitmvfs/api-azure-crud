@@ -21,6 +21,48 @@ const controller_login = async (email, senha, modelo) => {
   }
 };
 
+const cadastrarUsuario = async (email, senha, modelo) => {
+  try {
+    // Implemente a lógica para cadastrar a senha no banco de dados
+    const resultado = await modelo.findOneAndUpdate(
+      { email: email },
+      { senha: senha }, // Atualize isso com o campo correto no seu modelo
+      { new: true }
+    );
+
+    if (!resultado) {
+      return 404; // Usuário não encontrado
+    }
+
+    return 200; // Senha cadastrada com sucesso
+  } catch (erro) {
+    console.error(erro);
+    return 500; // Erro interno do servidor
+  }
+};
+
+const atualizarSenha = async (email, novaSenha, modelo) => {
+  try {
+    // Implemente a lógica para atualizar a senha no banco de dados
+    const resultado = await modelo.findOneAndUpdate(
+      { email: email },
+      { senha: novaSenha }, // Atualize isso com o campo correto no seu modelo
+      { new: true }
+    );
+
+    if (!resultado) {
+      return 404; // Usuário não encontrado
+    }
+
+    return 200; // Senha atualizada com sucesso
+  } catch (erro) {
+    console.error(erro);
+    return 500; // Erro interno do servidor
+  }
+};
 
 
-module.exports = { controller_login};
+module.exports = { 
+  controller_login, 
+  cadastrarUsuario, 
+  atualizarSenha};
