@@ -9,13 +9,16 @@ router
 
   .get("/categoria", (req, res) => {
     try {
-      categoriaModelo.find().then((resultado) => {
-        if (resultado.length > 0) {
-          res.status(200).send(resultado);
-        } else {
-          res.status(200).json("Banco vazio");
-        }
-      });
+      categoriaModelo
+        .find()
+        .sort({ nome: 1 })
+        .then((resultado) => {
+          if (resultado.length > 0) {
+            res.status(200).send(resultado);
+          } else {
+            res.status(200).json("Banco vazio");
+          }
+        });
     } catch {
       res.status(500).json("Erro interno.");
     }
@@ -23,15 +26,16 @@ router
 
   .get("/categoria/quantidade/:quantidade([0-9]+)", (req, res) => {
     try {
-      categoriaModelo.find()
-      .limit(req.params.quantidade)
-      .then((resultado) => {
-        if (resultado.length > 0) {
-          res.status(200).send(resultado);
-        } else {
-          res.status(200).json("Banco vazio");
-        }
-      });
+      categoriaModelo
+        .find()
+        .limit(req.params.quantidade)
+        .then((resultado) => {
+          if (resultado.length > 0) {
+            res.status(200).send(resultado);
+          } else {
+            res.status(200).json("Banco vazio");
+          }
+        });
     } catch {
       res.status(500).json("Erro interno.");
     }
@@ -106,7 +110,6 @@ router
 
   .put("/categoria/:id", async (req, res) => {
     try {
-
       const nome = new String(req.body.nome);
       const descricao = new String(req.body.descricao);
       const inicio = new Date(req.body.inicio);
@@ -124,7 +127,11 @@ router
         img: img,
       };
 
-      const resultado = await categoriaModelo.findOneAndUpdate({index:req.params.id}, novaCategoria, {new: true});
+      const resultado = await categoriaModelo.findOneAndUpdate(
+        { index: req.params.id },
+        novaCategoria,
+        { new: true }
+      );
       res.status(201).json("Categoria atualizada com sucesso");
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -156,17 +163,19 @@ router
       categoriaModelo
         .deleteOne({ index: req.params.id })
         .then((resultado) => {
-
-          if(resultado.deletedCount > 0 ){
-             res.status(200).json({ "Categoria deletada com sucesso": resultado });
-          }
-          else{
-            res.status(404).json("Categoria não encontrada")
+          if (resultado.deletedCount > 0) {
+            res
+              .status(200)
+              .json({ "Categoria deletada com sucesso": resultado });
+          } else {
+            res.status(404).json("Categoria não encontrada");
           }
         })
         .catch((erro) => {
-          if(erro instanceof mongoose.CastError){
-            res.status(400).json({ "Parametro inválido, verifique o id": erro });
+          if (erro instanceof mongoose.CastError) {
+            res
+              .status(400)
+              .json({ "Parametro inválido, verifique o id": erro });
           }
         });
     } catch {

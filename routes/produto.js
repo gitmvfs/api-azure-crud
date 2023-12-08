@@ -2,19 +2,22 @@ const router = require("express").Router();
 const produtoModelo = require("../models/produto/schema");
 const mongoose = require("mongoose");
 const auto_increment = require("../controllers/auto_increment");
-const categoriaModelo = require("../models/categoria/schema")
+const categoriaModelo = require("../models/categoria/schema");
 
 router
 
   .get("/produto", (req, res) => {
     try {
-      produtoModelo.find().then((resultado) => {
-        if (resultado.length > 0) {
-          res.status(200).send(resultado);
-        } else {
-          res.status(200).json("Banco vazio");
-        }
-      });
+      produtoModelo
+        .find()
+        .sort({ "nome": 1 })
+        .then((resultado) => {
+          if (resultado.length > 0) {
+            res.status(200).send(resultado);
+          } else {
+            res.status(200).json("Banco vazio");
+          }
+        });
     } catch {
       res.status(500).json("Erro interno.");
     }
@@ -111,7 +114,6 @@ router
 
   .put("/produto/:id", async (req, res) => {
     try {
-
       const nome = new String(req.body.nome);
       const preco = new String(req.body.preco);
       const genero = new String(req.body.genero);
@@ -125,7 +127,6 @@ router
       const categoriaNome = new String(req.body.categoriaNome);
 
       const novoProduto = {
-
         nome: nome,
         preco: preco,
         genero: genero,
@@ -179,7 +180,7 @@ router
             res.status(200).json({ "Produto deletado com sucesso": resultado });
           } else {
             res.status(404).json("Produto não encontrado");
-            console.log(resultado)
+            console.log(resultado);
           }
         })
         .catch((erro) => {
