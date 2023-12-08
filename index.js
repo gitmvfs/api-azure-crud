@@ -85,7 +85,8 @@ app.use("/", (req, res) => {
 
 // conectando com o banco
 mongoose
-  .connect(banco_string)
+  .connect(banco_string,{
+    dbname:"producao"})
   .then(() => {
     console.log("Conectado ao banco com sucesso.: " + banco_string);
 
