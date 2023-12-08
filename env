@@ -1,0 +1,3 @@
+BLOB_STRING="DefaultEndpointsProtocol=https;AccountName=gllmm;AccountKey=nxK+oZN4lM0hu+4qHex8/6yOaOAeArO1MJYClEDbQJP1q5UM0oBhWjnAaQ0LfZv/Y04IFSpTbKZl+AStm0EDNQ==;EndpointSuffix=core.windows.net"
+BANCO_STRING="mongodb+srv://apiEcommerce:senai115@ecommerce.oxpuhqh.mongodb.net/?retryWrites=true&w=majority"
+SERVER_PORT="3000"

@@ -39,7 +39,7 @@ const novoAdm5 = new adminModelo({
 adminModelo.find()
 .then((result) =>{
 
-    if(result != 0){
+    if(result > 0){
         console.log("Administradores ja cadastrados. ")
     }
     else{
